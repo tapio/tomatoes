@@ -3,6 +3,7 @@
 TOMATO.Game = function() {
 	this.entities = [];
 	this.powerUpTime = 3;
+	this.playerCount = 0;
 
 	this.renderSystem = new TOMATO.RenderSystem();
 	this.physicsSystem = new TOMATO.PhysicsSystem();
@@ -13,6 +14,39 @@ TOMATO.Game = function() {
 TOMATO.Game.prototype.add = function(entity) {
 	this.entities.push(entity);
 	this.renderSystem.scene.add(entity.mesh);
+};
+
+TOMATO.Game.prototype.createPlayer = function(params) {
+	var playerMaterials = [
+		new THREE.MeshBasicMaterial({ color: 0x22aa22 }),
+		new THREE.MeshBasicMaterial({ color: 0xaa2222 }),
+		new THREE.MeshBasicMaterial({ color: 0xaaaa22 }),
+		new THREE.MeshBasicMaterial({ color: 0xaa2222 })
+	];
+	var def = {
+		controller: !!params.controller,
+		size: { x: 0.8, y: 0.8 },
+		physics: { mass: 50.0, shape: "circle" }
+	};
+	var start = this.world.starts[this.playerCount % this.world.starts.length];
+	var mat = playerMaterials[this.playerCount % playerMaterials.length];
+
+	var pl = new TOMATO.Entity(params.id);
+	pl.mesh = new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat);
+	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
+	switch (params.controller) {
+		case "keyboard1": pl.controller = new TOMATO.KeyboardController(pl); break;
+		case "keyboard2": pl.controller = new TOMATO.KeyboardController(pl); break;
+		case "gamepad1": pl.controller = new TOMATO.GamepadController(pl); break;
+		case "gamepad2": pl.controller = new TOMATO.GamepadController(pl); break;
+		case "remote": pl.controller = new TOMATO.RemoteController(pl); break;
+		case "ai": pl.controller = new TOMATO.AIController(pl); break;
+		default: console.error("Invalid params.controller: " + params.controller); break;
+	}
+	this.add(pl);
+	this.renderSystem.follow(pl);
+	this.playerCount++;
+	return pl;
 };
 
 TOMATO.Game.prototype.spawnPowerUp = function() {
