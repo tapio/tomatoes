@@ -11,8 +11,8 @@ TOMATO.RenderSystem = function() {
 	this.renderer.gammaOutput = true;
 	this.renderer.autoClear = false;
 
-	this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, 0.1, 100);
-	this.camera.position.set(0, 0, 10);
+	this.camera = new THREE.OrthographicCamera(0, 0, 0, 0, 0.1, 202);
+	this.camera.position.set(0, 0, 101);
 	this.refreshCamera = true;
 	this.onWindowResize();
 

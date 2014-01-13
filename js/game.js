@@ -39,7 +39,8 @@ TOMATO.Game.prototype.update = function(dt) {
 		if (body && mesh) {
 			var pos = body.GetPosition();
 			var rot = body.GetAngle();
-			mesh.position.set(pos.get_x(), pos.get_y(), 0);
+			mesh.position.x = pos.get_x();
+			mesh.position.y = pos.get_y();
 			mesh.rotation.z = rot;
 		}
 	}

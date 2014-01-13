@@ -85,7 +85,7 @@ TOMATO.World = function(game) {
 	var bg = new TOMATO.Entity();
 	var bgGeo = new THREE.PlaneGeometry(this.width, this.height);
 	bg.mesh = new THREE.Mesh(bgGeo, bgMaterial);
-	bg.mesh.position.set(this.width / 2, this.height / 2, -0.01);
+	bg.mesh.position.set(this.width / 2, this.height / 2, -100);
 	game.add(bg);
 
 	// Water
@@ -127,6 +127,10 @@ TOMATO.World = function(game) {
 				case chars.GROUND_RIGHT:
 				case chars.BRIDGE:
 					entity.body = game.physicsSystem.createBody(blockDef, x, y);
+					break;
+				case chars.LADDER:
+				case chars.LADDER_TOP:
+					entity.mesh.position.z = -1;
 					break;
 				case chars.BOX:
 					entity.body = game.physicsSystem.createBody(boxDef, x, y);
