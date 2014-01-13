@@ -10,7 +10,7 @@ function init() {
 	var def = {
 		controller: true,
 		size: { x: 0.8, y: 0.8 },
-		physics: { mass: 50.0 }
+		physics: { mass: 50.0, shape: "circle" }
 	};
 	var start = TOMATO.game.world.starts[0];
 

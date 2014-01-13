@@ -15,8 +15,15 @@ TOMATO.PhysicsSystem.prototype.update = function(dt) {
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (!def.physics) return null;
 
-	var shape = new Box2D.b2PolygonShape();
-	shape.SetAsBox(def.size.x * 0.5, def.size.y * 0.5);
+	var shape;
+	var shapeDef = def.physics.shape || "box";
+	if (shapeDef === "circle") {
+		shape = new Box2D.b2CircleShape();
+		shape.set_m_radius(def.size.x * 0.5);
+	} else {
+		shape = new Box2D.b2PolygonShape();
+		shape.SetAsBox(def.size.x * 0.5, def.size.y * 0.5);
+	}
 
 	var bodyDef = new Box2D.b2BodyDef();
 	bodyDef.set_type(def.physics.mass ? Box2D.b2_dynamicBody : Box2D.b2_staticBody);
