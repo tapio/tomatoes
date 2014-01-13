@@ -7,8 +7,10 @@ TOMATO.game = new TOMATO.Game();
 function init() {
 	dumpInfo();
 
-	TOMATO.game.createPlayer({ controller: "keyboard1" });
+	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
 	TOMATO.game.createPlayer({ controller: "ai" });
+
+	pl.client = new TOMATO.Client(pl);
 
 	TOMATO.initUI();
 }

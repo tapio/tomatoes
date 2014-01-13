@@ -15,9 +15,22 @@ TOMATO.Entity = function(id) {
 	this.controller = null;
 };
 
+TOMATO.Entity.prototype.setTransform = function(x, y, rot) {
+	if (this.body) this.body.SetTransform(new Box2D.b2Vec2(x, y), rot);
+	else if (this.mesh) {
+		this.mesh.position.x = x;
+		this.mesh.position.y = y;
+		this.mesh.rotation.z = rot;
+	}
+};
+
 TOMATO.Entity.prototype.setPosition = function(x, y) {
-	if (this.body) this.body.SetPosition(x, y);
-	else if (this.mesh) return this.mesh.position.set(x, y, 0);
+	if (this.body) {
+		this.body.SetTransform(new Box2D.b2Vec2(x, y), this.body.GetAngle());
+	} else if (this.mesh) {
+		this.mesh.position.x = x;
+		this.mesh.position.y = y;
+	}
 };
 
 TOMATO.Entity.prototype.getPosition = function() {
@@ -29,14 +42,24 @@ TOMATO.Entity.prototype.getPosition = function() {
 };
 
 TOMATO.Entity.prototype.setRotation = function(rot) {
-	if (this.body) return this.body.GetPosition();
-	else if (this.mesh) return this.mesh.position;
+	if (this.body) this.body.SetTransform(this.body.GetPosition(), rot);
+	else if (this.mesh) this.mesh.rotation.z = rot;
 };
 
 TOMATO.Entity.prototype.getRotation = function() {
 	if (this.body) return this.body.GetAngle();
 	else if (this.mesh) return this.mesh.rotation.z;
 	else return 0;
+};
+
+TOMATO.Entity.prototype.setVelocity = function(x, y) {
+	if (this.body) this.body.SetLinearVelocity(new Box2D.b2Vec2(x, y));
+};
+
+TOMATO.Entity.prototype.getVelocity = function() {
+	if (this.body)
+		return new THREE.Vector2(this.body.GetLinearVelocity().get_x(), this.body.GetLinearVelocity().get_y());
+	else return new THREE.Vector2(0, 0);
 };
 
 

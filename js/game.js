@@ -12,9 +12,19 @@ TOMATO.Game = function() {
 };
 
 TOMATO.Game.prototype.add = function(entity) {
+	if (!entity.id) throw "Id required for objects added to game!";
 	this.entities.push(entity);
 	this.renderSystem.scene.add(entity.mesh);
 };
+
+TOMATO.Game.prototype.findById = function(id) {
+	for (var i = 0; i < this.entities.length; ++i) {
+		var entity = this.entities[i];
+		if (entity.id == id) return entity;
+	}
+	return null;
+};
+
 
 TOMATO.Game.prototype.createPlayer = function(params) {
 	var playerMaterials = [
@@ -58,8 +68,10 @@ TOMATO.Game.prototype.update = function(dt) {
 	// Update controllers
 	for (i = 0; i < this.entities.length; ++i) {
 		var controller = this.entities[i].controller;
-		if (controller)
-			controller.update(dt);
+		if (controller) controller.update(dt);
+
+		var client = this.entities[i].client;
+		if (client) client.update(dt);
 	}
 
 	// Update systems
