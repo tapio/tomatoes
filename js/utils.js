@@ -1,6 +1,8 @@
 "use strict";
 var _textures = [];
 
+function lerp(a, b, f) { return (1.0 - f) * a + f * b; }
+
 function loadTexture(path, opts) {
 	opts = opts || {};
 	var image = new Image();
