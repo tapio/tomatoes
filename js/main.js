@@ -21,6 +21,7 @@ function init() {
 	pl.mesh = new THREE.Mesh(new THREE.CubeGeometry(def.size.x, def.size.y, 0.1), new THREE.MeshBasicMaterial({ color: 0xaa22aa }));
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	TOMATO.game.add(pl);
+	TOMATO.game.renderSystem.follow(pl);
 
 	TOMATO.initUI();
 }

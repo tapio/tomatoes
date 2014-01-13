@@ -28,8 +28,9 @@ TOMATO.Game.prototype.update = function(dt) {
 			controller.update(dt);
 	}
 
-	// Step physics
+	// Update systems
 	this.physicsSystem.update(dt);
+	this.renderSystem.update(dt);
 
 	// Sync render and physics
 	for (i = 0; i < this.entities.length; ++i) {

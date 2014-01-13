@@ -20,8 +20,10 @@ TOMATO.Entity.prototype.setPosition = function(x, y) {
 };
 
 TOMATO.Entity.prototype.getPosition = function() {
-	if (this.body) return this.body.GetPosition();
-	else if (this.mesh) return this.mesh.position;
+	if (this.body)
+		return new THREE.Vector2(this.body.GetPosition().get_x(), this.body.GetPosition().get_y());
+	else if (this.mesh)
+		return new THREE.Vector2(this.mesh.position.x, this.mesh.position.y);
 	else return null;
 };
 
