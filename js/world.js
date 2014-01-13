@@ -20,6 +20,11 @@ var level = {
 	map: [
 		"                                        ",
 		"                                        ",
+		"                                        ",
+		"                                        ",
+		"                                        ",
+		"                                        ",
+		"                                        ",
 		"              b     p  r  m  h          ",
 		"           (#################H#)        ",
 		"                             H          ",
@@ -78,9 +83,9 @@ TOMATO.World = function(game) {
 
 	// Background
 	var bg = new TOMATO.Entity();
-	var bgGeo = new THREE.PlaneGeometry(200, 200);
+	var bgGeo = new THREE.PlaneGeometry(this.width, this.height);
 	bg.mesh = new THREE.Mesh(bgGeo, bgMaterial);
-	bg.mesh.position.z = -1;
+	bg.mesh.position.set(this.width / 2, this.height / 2, -0.01);
 	game.add(bg);
 
 	// Water
