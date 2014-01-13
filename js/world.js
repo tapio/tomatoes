@@ -7,26 +7,30 @@ var chars = {
 	LADDER: "H",
 	LADDER_TOP: "h",
 	BRIDGE: "*",
-	BARREL: "U",
-	BOX:    "X"
+	BOX: "X",
+	MUSHROOM1: "m",
+	MUSHROOM2: "r",
+	BUSH: "b",
+	PLANT: "p",
+	CACTUS: "c"
 }
 
 var level = {
 	map: [
 		"                                        ",
 		"                                        ",
-		"                             h          ",
+		"              b     p  r  m  h          ",
 		"           (#################H#)        ",
 		"                             H          ",
 		"                             H          ",
 		"                             H          ",
 		"                             H          ",
-		"        h  U              (######)      ",
+		"        h    X            (######)      ",
 		"      (#H#####)                         ",
 		"        H                               ",
 		"        H                               ",
 		"        H                               ",
-		"        H   X      h                    ",
+		"        H  X     c h                    ",
 		"    (########***###H                    ",
 		"                   H                    ",
 		"                   H                    ",
@@ -35,7 +39,8 @@ var level = {
 		"                                        "
 	],
 	background: "assets/backgrounds/sky.jpg",
-	tileset: "assets/tiles/"
+	tileset: "assets/tiles/",
+	clutters: "assets/clutter/"
 };
 
 TOMATO.World = function(game) {
@@ -53,6 +58,11 @@ TOMATO.World = function(game) {
 	materials[chars.LADDER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "ladder-top.png") });
 	materials[chars.BRIDGE] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "bridge.png") });
 	materials[chars.BOX] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "box.png") });
+	materials[chars.MUSHROOM1] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "mushroom-brown.png") });
+	materials[chars.MUSHROOM2] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "mushroom-red.png") });
+	materials[chars.BUSH] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "bush.png") });
+	materials[chars.PLANT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "plant.png") });
+	materials[chars.CACTUS] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "cactus.png") });
 	for (var m in materials) {
 		materials[m].transparent = true;
 	}
