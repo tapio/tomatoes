@@ -1,6 +1,7 @@
 "use strict";
 
 var chars = {
+	START: "S",
 	GROUND: "#",
 	GROUND_LEFT: "(",
 	GROUND_RIGHT: ")",
@@ -30,11 +31,15 @@ var level = {
 		"        H                               ",
 		"        H                               ",
 		"        H                               ",
-		"        H  X     c h                    ",
+		"      S H  X     c h                    ",
 		"    (########***###H                    ",
 		"                   H                    ",
 		"                   H                    ",
 		"                  (#######)             ",
+		"                                        ",
+		"                                        ",
+		"                                        ",
+		"                                        ",
 		"                                        ",
 		"                                        "
 	],
@@ -46,6 +51,10 @@ var level = {
 TOMATO.World = function(game) {
 	var gridSize = 1.0;
 	var i, j;
+
+	this.width = level.map[0].length;
+	this.height = level.map.length;
+	this.starts = [];
 
 	// Materials
 	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background) });
@@ -93,11 +102,17 @@ TOMATO.World = function(game) {
 	for (j = 0; j < level.map.length; ++j) {
 		for (i = 0; i < level.map[j].length; ++i) {
 			var char = level.map[j][i];
+			var x = i;
+			var y = level.map.length - j;
+
+			if (char == chars.START) {
+				this.starts.push(new THREE.Vector2(x, y));
+				continue;
+			}
+
 			var mat = materials[char];
 			if (!mat) continue;
 
-			var x = i;
-			var y = level.map.length - j;
 			var entity = new TOMATO.Entity();
 			entity.mesh = new THREE.Mesh(blockGeo, mat);
 			entity.mesh.position.set(x, y, 0);
