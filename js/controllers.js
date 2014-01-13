@@ -67,22 +67,22 @@ TOMATO.KeyboardController = function(entity) {
 TOMATO.KeyboardController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
-TOMATO.GamepadController = function() {
-	TOMATO.Controller.call(this);
+TOMATO.GamepadController = function(entity) {
+	TOMATO.Controller.call(this, entity);
 };
 
 TOMATO.GamepadController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
-TOMATO.AIController = function() {
-	TOMATO.Controller.call(this);
+TOMATO.AIController = function(entity) {
+	TOMATO.Controller.call(this, entity);
 };
 
 TOMATO.AIController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
-TOMATO.RemoteController = function() {
-	TOMATO.Controller.call(this);
+TOMATO.RemoteController = function(entity) {
+	TOMATO.Controller.call(this, entity);
 };
 
 TOMATO.RemoteController.prototype = Object.create(TOMATO.Controller.prototype);
