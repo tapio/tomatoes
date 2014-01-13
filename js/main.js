@@ -9,16 +9,14 @@ function init() {
 
 	var def = {
 		controller: true,
-		size: { x: 1.0, y: 1.0 },
-		physics: {
-			mass: 1.0
-		}
+		size: { x: 0.8, y: 0.8 },
+		physics: { mass: 50.0 }
 	};
 	var start = { x: 6, y: 8 };
 
 	var pl = new TOMATO.Entity();
 	pl.controller = new TOMATO.KeyboardController(pl);
-	pl.mesh = new THREE.Mesh(new THREE.CubeGeometry(def.size.x, def.size.y, 0.1), new THREE.MeshBasicMaterial({ color: 0xaa22aa }));
+	pl.mesh = new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), new THREE.MeshBasicMaterial({ color: 0xaa22aa }));
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	TOMATO.game.add(pl);
 	TOMATO.game.renderSystem.follow(pl);

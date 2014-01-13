@@ -73,11 +73,11 @@ TOMATO.World = function(game) {
 	// Blocks
 	var blockGeo = new THREE.PlaneGeometry(gridSize, gridSize);
 	var blockDef = {
-		size: { x: 1, y: 1 },
+		size: { x: gridSize, y: gridSize },
 		physics: { mass: 0 }
 	};
 	var boxDef = {
-		size: { x: 1, y: 1 },
+		size: { x: 0.9, y: 0.9 },
 		physics: { mass: 1 }
 	};
 	for (j = 0; j < level.map.length; ++j) {

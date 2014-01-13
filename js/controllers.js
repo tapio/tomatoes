@@ -3,9 +3,9 @@
 TOMATO.Controller = function(entity) {
 	this.entity = entity;
 	this.enabled = true;
-	this.moveForce = 0.05;
-	this.jumpForce = 1;
-	this.brakeForce = 0.1;
+	this.moveForce = 10.0;
+	this.jumpForce = 12.0;
+	this.brakeForce = -0.1;
 	this.moveInput = 0;
 	this.jumpInput = 0;
 };
@@ -18,10 +18,10 @@ TOMATO.Controller.prototype.update = function(dt) {
 		var ZERO = new Box2D.b2Vec2(0, 0);
 		var vec = new Box2D.b2Vec2(this.moveInput * this.moveForce, this.jumpInput * this.jumpForce);
 		body.ApplyLinearImpulse(vec, ZERO);
-		//vec = body.GetLinearVelocity();
-		//vec.set_x(-vec.x * this.brakeForce);
-		//vec.set_y(-vec.y * this.brakeForce);
-		//body.ApplyLinearImpulse(vec, ZERO);
+		vec = body.GetLinearVelocity();
+		vec.set_x(vec.get_x() * this.brakeForce);
+		vec.set_y(vec.get_y() * this.brakeForce);
+		body.ApplyLinearImpulse(vec, ZERO);
 	}
 };
 

@@ -35,9 +35,12 @@ TOMATO.Game.prototype.update = function(dt) {
 	// Sync render and physics
 	for (i = 0; i < this.entities.length; ++i) {
 		var body = this.entities[i].body;
-		if (body) {
+		var mesh = this.entities[i].mesh;
+		if (body && mesh) {
 			var pos = body.GetPosition();
-			this.entities[i].mesh.position.set(pos.get_x(), pos.get_y(), 0);
+			var rot = body.GetAngle();
+			mesh.position.set(pos.get_x(), pos.get_y(), 0);
+			mesh.rotation.z = rot;
 		}
 	}
 
