@@ -15,7 +15,7 @@ function loadTexture(path, opts) {
 		THREE.RepeatWrapping,
 		CONFIG.linearTextureFilter ? THREE.LinearFilter : THREE.NearestFilter,
 		CONFIG.linearTextureFilter ? THREE.LinearMipMapLinearFilter : THREE.NearestFilter,
-		opts.alpha ? THREE.RGBAFormat : THREE.RGBFormat,
+		(opts.alpha === undefined || opts.alpha) ? THREE.RGBAFormat : THREE.RGBFormat,
 		THREE.UnsignedByteType,
 		CONFIG.anisotropy
 	);
