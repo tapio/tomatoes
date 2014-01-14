@@ -15,6 +15,9 @@ TOMATO.initUI = function() {
 	window.addEventListener('resize', TOMATO.onWindowResize);
 };
 
+TOMATO.updateUI = function(dt) {
+};
+
 TOMATO.onWindowResize = function() {
 	TOMATO.game.onWindowResize();
 };

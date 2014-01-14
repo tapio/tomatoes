@@ -26,11 +26,11 @@ TOMATO.Client = function(entity, host) {
 			pingTime = performance.now();
 			client.send({ type: "ping" });
 		}, 2000);
-		//document.getElementById("ping-container").className = "";
+		document.getElementById("ping-container").className = "";
 	};
 
 	this.socket.onmessage = function(event) {
-		console.log("Received: " + event.data);
+		//console.log("Received: " + event.data);
 		var msg = JSON.parse(event.data);
 		switch (msg.type) {
 			// Update
@@ -52,7 +52,7 @@ TOMATO.Client = function(entity, host) {
 				}
 				break;
 			case "pong":
-				entity.ping = performance.now() - pingTime;
+				document.getElementById("ping").innerHTML = (performance.now() - pingTime).toFixed(0);
 				break;
 			// Someone left
 			case "leave":

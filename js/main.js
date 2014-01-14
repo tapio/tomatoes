@@ -24,6 +24,7 @@ function main() {
 
 		TOMATO.game.update(dt);
 		TOMATO.game.render(dt);
+		TOMATO.updateUI(dt);
 	}
 
 	init();
