@@ -2,12 +2,12 @@
 
 TOMATO.Game = function() {
 	this.entities = [];
-	this.powerUpTime = 3;
 	this.playerCount = 0;
 
 	this.renderSystem = new TOMATO.RenderSystem();
 	this.physicsSystem = new TOMATO.PhysicsSystem();
 	this.soundSystem = new TOMATO.SoundSystem();
+	this.powerUpSystem = new TOMATO.PowerUpSystem();
 	this.world = new TOMATO.World(this);
 };
 
@@ -90,6 +90,7 @@ TOMATO.Game.prototype.update = function(dt) {
 	}
 
 	// Update systems
+	this.powerUpSystem.update(dt);
 	this.physicsSystem.update(dt);
 	this.renderSystem.update(dt);
 
@@ -104,13 +105,6 @@ TOMATO.Game.prototype.update = function(dt) {
 			mesh.position.y = pos.get_y();
 			mesh.rotation.z = rot;
 		}
-	}
-
-	// Spawn power ups
-	this.powerUpTime -= dt;
-	if (this.powerUpTime <= 0) {
-		this.powerUpTime = 10;
-		this.spawnPowerUp();
 	}
 };
 
