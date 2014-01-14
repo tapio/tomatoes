@@ -140,8 +140,11 @@ TOMATO.World = function(game) {
 				case chars.BUSH:
 				case chars.PLANT:
 				case chars.CACTUS:
+					entity.id = null;
+					break;
 				case chars.WATER:
 				case chars.WATER_TOP:
+					entity.mesh.position.z = 100;
 					entity.id = null;
 					break;
 				case chars.BOX:
