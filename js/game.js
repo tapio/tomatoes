@@ -62,6 +62,7 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	var mat = playerMaterials[this.playerCount % playerMaterials.length];
 
 	var pl = new TOMATO.Entity(params.id);
+	pl.status = new TOMATO.Status(pl);
 	pl.mesh = new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat);
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	pl.body.entity = pl;
@@ -86,13 +87,12 @@ TOMATO.Game.prototype.spawnPowerUp = function() {
 
 TOMATO.Game.prototype.update = function(dt) {
 	var i;
-	// Update controllers
+	// Update components
 	for (i = 0; i < this.entities.length; ++i) {
-		var controller = this.entities[i].controller;
-		if (controller) controller.update(dt);
-
-		var client = this.entities[i].client;
-		if (client) client.update(dt);
+		var entity = this.entities[i];
+		if (entity.controller) entity.controller.update(dt);
+		if (entity.status) entity.status.update(dt);
+		if (entity.client) entity.client.update(dt);
 	}
 
 	// Update systems

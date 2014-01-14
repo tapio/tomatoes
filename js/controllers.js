@@ -49,7 +49,7 @@ TOMATO.KeyboardController = function(entity) {
 		this.jumpInput = 0;
 
 		// Jump / climb
-		if (pressed[87] || pressed[38]) { // W || Up
+		if ((pressed[87] || pressed[38]) && !this.entity.status.airborne) { // W || Up
 			this.jumpInput = 1;
 		} else if (pressed[83] || pressed[40]) { // S || Down
 			this.jumpInput = -1;

@@ -13,6 +13,7 @@ TOMATO.Entity = function(id) {
 	this.mesh = null;
 	this.body = null;
 	this.controller = null;
+	this.status = null;
 };
 
 TOMATO.Entity.prototype.setTransform = function(x, y, rot) {
