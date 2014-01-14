@@ -61,11 +61,14 @@ TOMATO.RenderSystem.prototype.update = function(dt) {
 	y1 = midy - boxh * 0.5;
 	y2 = midy + boxh * 0.5;
 	// Move back inside screen
+	boxw = x2 - x1; boxh = y2 - y1;
 	var xcorr = 0, ycorr = 0;
-	if (x1 < 0) xcorr = -x1;
-	if (x2 > w) xcorr = w-x2;
-	if (y1 < 0) ycorr = -y1;
-	if (y2 > h) ycorr = h-y2;
+	if (boxw > w) xcorr = -x1 - (boxw - w) * 0.5;
+	else if (x1 < 0) xcorr = -x1;
+	else if (x2 > w) xcorr = w-x2;
+	if (boxh > h) ycorr = -y1 - (boxh - h) * 0.5;
+	else if (y1 < 0) ycorr = -y1;
+	else if (y2 > h) ycorr = h-y2;
 	x1 += xcorr; x2 += xcorr;
 	y1 += ycorr; y2 += ycorr;
 	// Interplate smoothly to the new viewport
