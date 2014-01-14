@@ -3,7 +3,7 @@
 function addMessage(msg) { console.log(msg); }
 
 TOMATO.Client = function(entity, host) {
-	this.entity = entity;
+	TOMATO.Component.call(this, entity);
 	this.gaming = false;
 	this.connected = false;
 	host = host || "ws://" + window.location.hostname + ":10667";
@@ -75,8 +75,8 @@ TOMATO.Client = function(entity, host) {
 		if (client.gaming) addMessage("Connection terminated!", "error");
 		else console.log("No connection");
 	};
-
 };
+TOMATO.Client.prototype = Object.create(TOMATO.Component.prototype);
 
 TOMATO.Client.prototype.update = function(dt) {
 	if (!this.gaming) return;
