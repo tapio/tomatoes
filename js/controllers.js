@@ -1,14 +1,14 @@
 "use strict";
 
 TOMATO.Controller = function(entity) {
-	this.entity = entity;
-	this.enabled = true;
+	TOMATO.Component.call(this, entity);
 	this.moveForce = 10.0;
 	this.jumpForce = 12.0;
 	this.brakeForce = -0.1;
 	this.moveInput = 0;
 	this.jumpInput = 0;
 };
+TOMATO.Controller.prototype = Object.create(TOMATO.Component.prototype);
 
 TOMATO.Controller.prototype.update = function(dt) {
 	if (!this.enabled) return;

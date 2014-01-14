@@ -1,11 +1,12 @@
 "use strict";
 
 TOMATO.Status = function(entity) {
-	this.entity = entity;
+	TOMATO.Component.call(this, entity);
 	this.dead = false;
 	this.airborne = false;
 	this.respawns = Infinity;
 };
+TOMATO.Status.prototype = Object.create(TOMATO.Component.prototype);
 
 TOMATO.Status.prototype.update = function(dt) {
 	if (this.dead) return;

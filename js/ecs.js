@@ -1,11 +1,13 @@
 "use strict";
 // Component-Entity-System
 
-TOMATO.Component = function() {
-
+TOMATO.Component = function(owner) {
+	this.entity = owner;
+	this.enabled = true;
 };
 
-TOMATO.Component.update = function(dt) { };
+TOMATO.Component.prototype.update = function(dt) { };
+TOMATO.Component.prototype.frameEnd = function(dt) { };
 
 
 TOMATO.Entity = function(id) {

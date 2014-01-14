@@ -1,6 +1,5 @@
 "use strict";
 
-
 TOMATO.PhysicsSystem = function() {
 	this.world = new Box2D.b2World(new Box2D.b2Vec2(0.0, -9.81));
 	this.listener = new Box2D.b2ContactListener();

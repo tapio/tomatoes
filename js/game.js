@@ -81,10 +81,6 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	return pl;
 };
 
-TOMATO.Game.prototype.spawnPowerUp = function() {
-
-};
-
 TOMATO.Game.prototype.update = function(dt) {
 	var i;
 	// Update components
