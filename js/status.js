@@ -4,6 +4,7 @@ TOMATO.Status = function(entity) {
 	this.entity = entity;
 	this.dead = false;
 	this.airborne = false;
+	this.respawns = Infinity;
 };
 
 TOMATO.Status.prototype.update = function(dt) {
@@ -12,10 +13,27 @@ TOMATO.Status.prototype.update = function(dt) {
 	var pos = this.entity.getPosition();
 
 	if (pos.y < TOMATO.game.world.waterLevel) {
+		this.kill();
+		return;
+	}
+};
+
+TOMATO.Status.prototype.kill = function() {
+	if (!this.respawn()) {
 		this.dead = true;
 		if (this.entity.controller)
 			this.entity.controller.enabled = false;
 		console.log("Player " + this.entity.id + " died");
-		return;
 	}
+};
+
+TOMATO.Status.prototype.respawn = function() {
+	if (this.respawns > 0) {
+		--this.respawns;
+		var starts = TOMATO.game.world.starts;
+		var start = starts[(Math.random() * starts.length)|0];
+		this.entity.setPosition(start.x, start.y);
+		return true;
+	}
+	return false;
 };
