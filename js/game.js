@@ -22,6 +22,7 @@ TOMATO.Game.prototype.removeById = function(id) {
 		var entity = this.entities[i];
 		if (entity.id == id) {
 			if (entity.mesh) this.renderSystem.scene.remove(entity.mesh);
+			if (entity.body) this.physicsSystem.destroyBody(entity.body);
 			this.entities.splice(i, 1);
 			return;
 		}

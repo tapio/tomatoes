@@ -41,6 +41,10 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	return body;
 };
 
+TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
+	this.world.DestroyBody(body);
+};
+
 TOMATO.PhysicsSystem.prototype.createChainShape = function(vertices, closedLoop) {
 	var shape = new Box2D.b2ChainShape();
 	var buffer = Box2D.allocate(vertices.length * 8, 'float', Box2D.ALLOC_STACK);
