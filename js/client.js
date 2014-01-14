@@ -56,7 +56,7 @@ TOMATO.Client = function(entity, host) {
 				break;
 			// Someone left
 			case "leave":
-				//TOMATO.game.removeById(msg.id);
+				TOMATO.game.removeById(msg.id);
 				addMessage("Player " + msg.id + " left.", "warn");
 				break;
 			// Introduction ok, join a game

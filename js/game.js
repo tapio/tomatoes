@@ -14,7 +14,18 @@ TOMATO.Game = function() {
 TOMATO.Game.prototype.add = function(entity) {
 	if (!entity.id) throw "Id required for objects added to game!";
 	this.entities.push(entity);
-	this.renderSystem.scene.add(entity.mesh);
+	if (entity.mesh) this.renderSystem.scene.add(entity.mesh);
+};
+
+TOMATO.Game.prototype.removeById = function(id) {
+	for (var i = 0; i < this.entities.length; ++i) {
+		var entity = this.entities[i];
+		if (entity.id == id) {
+			if (entity.mesh) this.renderSystem.scene.remove(entity.mesh);
+			this.entities.splice(i, 1);
+			return;
+		}
+	}
 };
 
 TOMATO.Game.prototype.findById = function(id) {
@@ -25,6 +36,9 @@ TOMATO.Game.prototype.findById = function(id) {
 	return null;
 };
 
+TOMATO.Game.prototype.remove = function(entity) {
+	this.removeById(entity.id);
+};
 
 TOMATO.Game.prototype.createPlayer = function(params) {
 	var playerMaterials = [
