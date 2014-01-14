@@ -13,7 +13,9 @@ var chars = {
 	MUSHROOM2: "r",
 	BUSH: "b",
 	PLANT: "p",
-	CACTUS: "c"
+	CACTUS: "c",
+	WATER: "W",
+	WATER_TOP: "~"
 }
 
 var level = {
@@ -46,7 +48,10 @@ var level = {
 		"                                        ",
 		"                                        ",
 		"                                        ",
-		"                                        "
+		"                                        ",
+		"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
 	background: "assets/backgrounds/sky.jpg",
 	tileset: "assets/tiles/",
@@ -59,12 +64,15 @@ TOMATO.World = function(game) {
 
 	this.width = level.map[0].length * gridSize;
 	this.height = level.map.length * gridSize;
+	this.waterLevel = 3 * gridSize;
 	this.starts = [];
 
 	// Materials
 	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background) });
 	var waterMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 	var materials = {};
+	materials[chars.WATER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-mid.png") });
+	materials[chars.WATER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-top.png") });
 	materials[chars.GROUND] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-mid.png") });
 	materials[chars.GROUND_LEFT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-left.png") });
 	materials[chars.GROUND_RIGHT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-right.png") });
@@ -88,12 +96,6 @@ TOMATO.World = function(game) {
 	bg.mesh.position.set(this.width / 2, this.height / 2, -100);
 	game.add(bg);
 
-	// Water
-	var water = new TOMATO.Entity();
-	var waterGeo = new THREE.PlaneGeometry(1000, 100);
-	water.mesh = new THREE.Mesh(waterGeo, waterMaterial);
-	//game.add(water);
-
 	// Blocks
 	var blockGeo = new THREE.PlaneGeometry(gridSize, gridSize);
 	var blockDef = {
@@ -107,8 +109,8 @@ TOMATO.World = function(game) {
 	for (j = 0; j < level.map.length; ++j) {
 		for (i = 0; i < level.map[j].length; ++i) {
 			var char = level.map[j][i];
-			var x = i;
-			var y = level.map.length - j;
+			var x = i + gridSize * 0.5;
+			var y = (level.map.length - j) - gridSize * 0.5;
 
 			if (char == chars.START) {
 				this.starts.push(new THREE.Vector2(x, y));
@@ -138,6 +140,8 @@ TOMATO.World = function(game) {
 				case chars.BUSH:
 				case chars.PLANT:
 				case chars.CACTUS:
+				case chars.WATER:
+				case chars.WATER_TOP:
 					entity.id = null;
 					break;
 				case chars.BOX:
