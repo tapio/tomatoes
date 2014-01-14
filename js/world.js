@@ -57,8 +57,8 @@ TOMATO.World = function(game) {
 	var gridSize = 1.0;
 	var i, j;
 
-	this.width = level.map[0].length;
-	this.height = level.map.length;
+	this.width = level.map[0].length * gridSize;
+	this.height = level.map.length * gridSize;
 	this.starts = [];
 
 	// Materials
@@ -139,4 +139,5 @@ TOMATO.World = function(game) {
 			game.add(entity);
 		}
 	}
+	game.physicsSystem.createBorders(0, this.height, this.width, 0);
 };

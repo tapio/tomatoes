@@ -40,3 +40,36 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	body.CreateFixture(fixtureDef);
 	return body;
 };
+
+TOMATO.PhysicsSystem.prototype.createChainShape = function(vertices, closedLoop) {
+	var shape = new Box2D.b2ChainShape();
+	var buffer = Box2D.allocate(vertices.length * 8, 'float', Box2D.ALLOC_STACK);
+	var offset = 0;
+	for (var i = 0; i < vertices.length; ++i) {
+		Box2D.setValue(buffer+(offset), vertices[i].get_x(), 'float');
+		Box2D.setValue(buffer+(offset+4), vertices[i].get_y(), 'float');
+		offset += 8;
+	}
+	var ptr_wrapped = Box2D.wrapPointer(buffer, Box2D.b2Vec2);
+	if (closedLoop) shape.CreateLoop(ptr_wrapped, vertices.length);
+	else shape.CreateChain(ptr_wrapped, vertices.length);
+	return shape;
+};
+
+TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
+	var topLeft = new Box2D.b2Vec2(x1, y1);
+	var topRight = new Box2D.b2Vec2(x2, y1);
+	var bottomLeft = new Box2D.b2Vec2(x1, y2);
+	var bottomRight = new Box2D.b2Vec2(x2, y2);
+
+	var chainShape = this.createChainShape([ topLeft, topRight, bottomRight, bottomLeft ], true); // true for closed loop
+
+	var bodyDef = new Box2D.b2BodyDef();
+	bodyDef.set_type(Box2D.b2_staticBody);
+	var body = this.world.CreateBody(bodyDef);
+
+	var fixtureDef = new Box2D.b2FixtureDef();
+	fixtureDef.set_shape(chainShape);
+	body.CreateFixture(fixtureDef);
+};
+
