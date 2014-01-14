@@ -12,8 +12,8 @@ TOMATO.Game = function() {
 };
 
 TOMATO.Game.prototype.add = function(entity) {
-	if (!entity.id) throw "Id required for objects added to game!";
-	this.entities.push(entity);
+	if (entity.id === undefined) throw "Id should be valid or null, not undefined";
+	if (entity.id) this.entities.push(entity);
 	if (entity.mesh) this.renderSystem.scene.add(entity.mesh);
 };
 

@@ -118,7 +118,7 @@ TOMATO.World = function(game) {
 			var mat = materials[char];
 			if (!mat) continue;
 
-			var entity = new TOMATO.Entity();
+			var entity = new TOMATO.Entity(null);
 			entity.mesh = new THREE.Mesh(blockGeo, mat);
 			entity.mesh.position.set(x, y, 0);
 			switch (char) {

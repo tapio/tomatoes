@@ -9,7 +9,7 @@ TOMATO.Component.update = function(dt) { };
 
 
 TOMATO.Entity = function(id) {
-	this.id = id || Math.floor(Math.random()*100000000).toString(36);
+	this.id = (id !== undefined) ? id : Math.floor(Math.random()*100000000).toString(36);
 	this.mesh = null;
 	this.body = null;
 	this.controller = null;
