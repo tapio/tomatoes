@@ -90,7 +90,7 @@ TOMATO.World = function(game) {
 
 	// Background
 	var bg = new TOMATO.Entity(null);
-	bg.visual = new TOMATO.Sprite(bg, this.width, this.height, bgMaterial));
+	bg.visual = new TOMATO.Sprite(bg, this.width, this.height, bgMaterial);
 	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
 	game.add(bg);
 
