@@ -53,7 +53,7 @@ var level = {
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 		"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 	],
-	background: "assets/backgrounds/sky.jpg",
+	background: "assets/backgrounds/sky.png",
 	tileset: "assets/tiles/",
 	clutters: "assets/clutter/"
 };
