@@ -82,7 +82,7 @@ TOMATO.World = function(game) {
 	}
 
 	// Background
-	var bg = new TOMATO.Entity();
+	var bg = new TOMATO.Entity(null);
 	var bgGeo = new THREE.PlaneGeometry(this.width, this.height);
 	bg.mesh = new THREE.Mesh(bgGeo, bgMaterial);
 	bg.mesh.position.set(this.width / 2, this.height / 2, -100);
@@ -118,7 +118,7 @@ TOMATO.World = function(game) {
 			var mat = materials[char];
 			if (!mat) continue;
 
-			var entity = new TOMATO.Entity(null);
+			var entity = new TOMATO.Entity();
 			entity.mesh = new THREE.Mesh(blockGeo, mat);
 			entity.mesh.position.set(x, y, 0);
 			switch (char) {
@@ -127,10 +127,18 @@ TOMATO.World = function(game) {
 				case chars.GROUND_RIGHT:
 				case chars.BRIDGE:
 					entity.body = game.physicsSystem.createBody(blockDef, x, y);
+					entity.id = null;
 					break;
 				case chars.LADDER:
 				case chars.LADDER_TOP:
 					entity.mesh.position.z = -1;
+					break;
+				case chars.MUSHROOM1:
+				case chars.MUSHROOM2:
+				case chars.BUSH:
+				case chars.PLANT:
+				case chars.CACTUS:
+					entity.id = null;
 					break;
 				case chars.BOX:
 					entity.body = game.physicsSystem.createBody(boxDef, x, y);
