@@ -3,6 +3,7 @@
 
 TOMATO.PhysicsSystem = function() {
 	this.world = new Box2D.b2World(new Box2D.b2Vec2(0.0, -9.81));
+	this.listener = new Box2D.b2ContactListener();
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
@@ -11,6 +12,19 @@ TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	var posIters = 3;
 	this.world.Step(timeStep, velIters, posIters);
 };
+
+TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
+	Box2D.customizeVTable(this.listener, [{
+		original: Box2D.b2ContactListener.prototype.BeginContact,
+		replacement: function (thisPtr, contactPtr) {
+			var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
+			var fixtureA = contact.GetFixtureA();
+			var fixtureB = contact.GetFixtureB();
+			callback(fixtureA.GetBody(), fixtureB.GetBody());
+		}
+	}]);
+	this.world.SetContactListener(this.listener);
+}
 
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (!def.physics) return null;

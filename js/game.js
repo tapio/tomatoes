@@ -9,6 +9,11 @@ TOMATO.Game = function() {
 	this.soundSystem = new TOMATO.SoundSystem();
 	this.powerUpSystem = new TOMATO.PowerUpSystem();
 	this.world = new TOMATO.World(this);
+
+	//this.physicsSystem.setContactListener(function(a, b) {
+		//if (a.entity) console.log(a.entity);
+		//if (b.entity) console.log(b.entity);
+	//});
 };
 
 TOMATO.Game.prototype.add = function(entity) {
@@ -59,6 +64,7 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	var pl = new TOMATO.Entity(params.id);
 	pl.mesh = new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat);
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
+	pl.body.entity = pl;
 	switch (params.controller) {
 		case "keyboard1": pl.controller = new TOMATO.KeyboardController(pl); break;
 		case "keyboard2": pl.controller = new TOMATO.KeyboardController(pl); break;
