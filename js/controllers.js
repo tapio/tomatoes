@@ -62,26 +62,30 @@ TOMATO.KeyboardController = function(entity) {
 		}
 	};
 };
-
 TOMATO.KeyboardController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
 TOMATO.GamepadController = function(entity) {
 	TOMATO.Controller.call(this, entity);
 };
-
 TOMATO.GamepadController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
 TOMATO.AIController = function(entity) {
 	TOMATO.Controller.call(this, entity);
-};
 
+	this.update = function(dt) {
+		TOMATO.Controller.prototype.update.call(this, dt);
+
+		this.jumpInput = 0;
+		if (Math.random() < 0.01) this.jumpInput = 1;
+		if (Math.random() < 0.05) this.moveInput = Math.random() * 2 - 1;
+	};
+};
 TOMATO.AIController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
 TOMATO.RemoteController = function(entity) {
 	TOMATO.Controller.call(this, entity);
 };
-
 TOMATO.RemoteController.prototype = Object.create(TOMATO.Controller.prototype);
