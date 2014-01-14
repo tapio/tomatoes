@@ -32,8 +32,7 @@ TOMATO.KeyboardController = function(entity) {
 	var pressed = [];
 
 	function onKeyDown(event) {
-		var key = event.keyCode;
-		pressed[key] = true;
+		pressed[event.keyCode] = true;
 	}
 
 	function onKeyUp(event) {

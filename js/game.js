@@ -111,7 +111,3 @@ TOMATO.Game.prototype.update = function(dt) {
 TOMATO.Game.prototype.render = function(dt) {
 	this.renderSystem.render(dt);
 };
-
-TOMATO.Game.prototype.onWindowResize = function() {
-	this.renderSystem.onWindowResize();
-}

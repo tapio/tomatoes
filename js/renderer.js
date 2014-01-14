@@ -18,6 +18,9 @@ TOMATO.RenderSystem = function() {
 
 	this.scene = new THREE.Scene();
 	this.trackedEntities = [];
+
+	var renderSystem = this;
+	window.addEventListener('resize', function() { renderSystem.onWindowResize(); });
 };
 
 TOMATO.RenderSystem.prototype.follow = function(entity) {
