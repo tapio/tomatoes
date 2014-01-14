@@ -33,7 +33,6 @@ function updateTextures() {
 		_textures[i].anisotropy = CONFIG.anisotropy;
 		_textures[i].needsUpdate = true;
 	}
-	DC.updateConfig();
 }
 
 
@@ -116,11 +115,11 @@ function dumpInfo() {
 		"Max viewport dims": gl.getParameter(gl.MAX_VIEWPORT_DIMS)[0] + "x" + gl.getParameter(gl.MAX_VIEWPORT_DIMS)[1]
 	};
 	console.log("WebGL info: ", gl_info);
-};
+}
 
 function screenshot(dontDownload, useJPG) {
 	var imgtype = useJPG ? "image/jpeg" : "image/png";
-	var dataUrl = renderer.domElement.toDataURL(imgtype);
+	var dataUrl = TOMATO.game.renderSystem.renderer.domElement.toDataURL(imgtype);
 	if (!dontDownload) dataUrl = dataUrl.replace(imgtype, "image/octet-stream");
 	window.open(dataUrl, "_blank");
 }
@@ -153,7 +152,7 @@ function diagnose() {
 	var geometries = [];
 	var meshes = [];
 	var materials = [];
-	scene.traverse(function(node) {
+	TOMATO.game.renderSystem.scene.traverse(function(node) {
 		meshes.push(node);
 		if (node.geometry) geometries.push(node.geometry);
 		if (node.material) {

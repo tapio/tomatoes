@@ -16,7 +16,7 @@ var chars = {
 	CACTUS: "c",
 	WATER: "W",
 	WATER_TOP: "~"
-}
+};
 
 var level = {
 	map: [
@@ -69,7 +69,6 @@ TOMATO.World = function(game) {
 
 	// Materials
 	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background) });
-	var waterMaterial = new THREE.MeshBasicMaterial({ color: 0x0000ff });
 	var materials = {};
 	materials[chars.WATER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-mid.png") });
 	materials[chars.WATER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-top.png") });

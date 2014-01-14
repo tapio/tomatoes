@@ -1,6 +1,6 @@
 "use strict";
 
-function addMessage(msg) { console.log(msg); };
+function addMessage(msg) { console.log(msg); }
 
 TOMATO.Client = function(entity, host) {
 	this.entity = entity;
@@ -12,7 +12,6 @@ TOMATO.Client = function(entity, host) {
 	var client = this;
 	var pingInterval = null;
 	var pingTime = performance.now();
-	var v = new THREE.Vector2();
 
 	this.send = function(msg) {
 		this.socket.send(JSON.stringify(msg));

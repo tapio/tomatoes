@@ -1,0 +1,10 @@
+{
+	"predef": [ "console", "requestAnimationFrame", "THREE", "Physijs", "Box2D", "dat", "Detector", "TOMATO", "CONFIG", "assets" ],
+	"browser": true,
+	"jquery": true,
+	"newcap": true,
+	"unused": true,
+	"trailing": true,
+	"globalstrict": true,
+	"strict": false
+}

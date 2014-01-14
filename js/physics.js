@@ -24,7 +24,7 @@ TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
 		}
 	}]);
 	this.world.SetContactListener(this.listener);
-}
+};
 
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (!def.physics) return null;

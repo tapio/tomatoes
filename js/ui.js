@@ -1,3 +1,4 @@
+"use strict";
 
 TOMATO.initUI = function() {
 	var container = document.getElementById('container');
