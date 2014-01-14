@@ -57,7 +57,7 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 
 	var pl = new TOMATO.Entity(params.id);
 	pl.status = new TOMATO.Status(pl);
-	pl.visual = new TOMATO.Sprite(pl, new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat));
+	pl.visual = new TOMATO.Sprite(pl, def.size.x, def.size.y, mat);
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	pl.body.entity = pl;
 	switch (params.controller) {

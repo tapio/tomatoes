@@ -90,13 +90,11 @@ TOMATO.World = function(game) {
 
 	// Background
 	var bg = new TOMATO.Entity(null);
-	var bgGeo = new THREE.PlaneGeometry(this.width, this.height);
-	bg.visual = new TOMATO.Sprite(bg, new THREE.Mesh(bgGeo, bgMaterial));
+	bg.visual = new TOMATO.Sprite(bg, this.width, this.height, bgMaterial));
 	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
 	game.add(bg);
 
 	// Blocks
-	var blockGeo = new THREE.PlaneGeometry(gridSize, gridSize);
 	var blockDef = {
 		size: { x: gridSize, y: gridSize },
 		physics: { mass: 0 }
@@ -120,7 +118,7 @@ TOMATO.World = function(game) {
 			if (!mat) continue;
 
 			var entity = new TOMATO.Entity();
-			entity.visual = new TOMATO.Sprite(entity, new THREE.Mesh(blockGeo, mat));
+			entity.visual = new TOMATO.Sprite(entity, blockDef.size.x, blockDef.size.y, mat);
 			entity.visual.mesh.position.set(x, y, 0);
 			switch (char) {
 				case chars.GROUND:

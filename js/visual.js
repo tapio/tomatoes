@@ -15,9 +15,8 @@ TOMATO.Visual = function(entity) {
 TOMATO.Visual.prototype = Object.create(TOMATO.Component.prototype);
 
 
-TOMATO.Sprite = function(entity, mesh) {
+TOMATO.Sprite = function(entity, width, height, material) {
 	TOMATO.Visual.call(this, entity);
-	this.mesh = mesh;
-
+	this.mesh = new THREE.Mesh(new THREE.PlaneGeometry(width, height), material);
 };
 TOMATO.Visual.prototype = Object.create(TOMATO.Visual.prototype);
