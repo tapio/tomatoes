@@ -82,13 +82,15 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 };
 
 TOMATO.Game.prototype.update = function(dt) {
-	var i;
+	var i, c;
 	// Update components
 	for (i = 0; i < this.entities.length; ++i) {
 		var entity = this.entities[i];
-		if (entity.controller) entity.controller.update(dt);
-		if (entity.status) entity.status.update(dt);
-		if (entity.client) entity.client.update(dt);
+		for (c in entity) {
+			var component = entity[c];
+			if (component instanceof TOMATO.Component)
+				component.update(dt);
+		}
 	}
 
 	// Update systems
