@@ -19,14 +19,14 @@ TOMATO.Game = function() {
 TOMATO.Game.prototype.add = function(entity) {
 	if (entity.id === undefined) throw "Id should be valid or null, not undefined";
 	if (entity.id) this.entities.push(entity);
-	if (entity.mesh) this.renderSystem.scene.add(entity.mesh);
+	if (entity.visual) this.renderSystem.scene.add(entity.visual.mesh);
 };
 
 TOMATO.Game.prototype.removeById = function(id) {
 	for (var i = 0; i < this.entities.length; ++i) {
 		var entity = this.entities[i];
 		if (entity.id == id) {
-			if (entity.mesh) this.renderSystem.scene.remove(entity.mesh);
+			if (entity.visual) this.renderSystem.scene.remove(entity.visual.mesh);
 			if (entity.body) this.physicsSystem.destroyBody(entity.body);
 			this.entities.splice(i, 1);
 			return;
@@ -63,7 +63,7 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 
 	var pl = new TOMATO.Entity(params.id);
 	pl.status = new TOMATO.Status(pl);
-	pl.mesh = new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat);
+	pl.visual = new TOMATO.Sprite(pl, new THREE.Mesh(new THREE.PlaneGeometry(def.size.x, def.size.y), mat));
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	pl.body.entity = pl;
 	switch (params.controller) {
@@ -101,13 +101,14 @@ TOMATO.Game.prototype.update = function(dt) {
 	// Sync render and physics
 	for (i = 0; i < this.entities.length; ++i) {
 		var body = this.entities[i].body;
-		var mesh = this.entities[i].mesh;
-		if (body && mesh) {
+		var visual = this.entities[i].visual;
+		if (body && visual) {
 			var pos = body.GetPosition();
 			var rot = body.GetAngle();
-			mesh.position.x = pos.get_x();
-			mesh.position.y = pos.get_y();
-			mesh.rotation.z = rot;
+			var meshPos = visual.mesh.position;
+			meshPos.x = pos.get_x();
+			meshPos.y = pos.get_y();
+			meshPos.z = rot;
 		}
 	}
 };

@@ -91,8 +91,8 @@ TOMATO.World = function(game) {
 	// Background
 	var bg = new TOMATO.Entity(null);
 	var bgGeo = new THREE.PlaneGeometry(this.width, this.height);
-	bg.mesh = new THREE.Mesh(bgGeo, bgMaterial);
-	bg.mesh.position.set(this.width / 2, this.height / 2, -100);
+	bg.visual = new TOMATO.Sprite(bg, new THREE.Mesh(bgGeo, bgMaterial));
+	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
 	game.add(bg);
 
 	// Blocks
@@ -120,8 +120,8 @@ TOMATO.World = function(game) {
 			if (!mat) continue;
 
 			var entity = new TOMATO.Entity();
-			entity.mesh = new THREE.Mesh(blockGeo, mat);
-			entity.mesh.position.set(x, y, 0);
+			entity.visual = new TOMATO.Sprite(entity, new THREE.Mesh(blockGeo, mat));
+			entity.visual.mesh.position.set(x, y, 0);
 			switch (char) {
 				case chars.GROUND:
 				case chars.GROUND_LEFT:
@@ -132,7 +132,7 @@ TOMATO.World = function(game) {
 					break;
 				case chars.LADDER:
 				case chars.LADDER_TOP:
-					entity.mesh.position.z = -1;
+					entity.visual.mesh.position.z = -1;
 					break;
 				case chars.MUSHROOM1:
 				case chars.MUSHROOM2:
@@ -143,7 +143,7 @@ TOMATO.World = function(game) {
 					break;
 				case chars.WATER:
 				case chars.WATER_TOP:
-					entity.mesh.position.z = 100;
+					entity.visual.mesh.position.z = 100;
 					entity.id = null;
 					break;
 				case chars.BOX:
