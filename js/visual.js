@@ -1,10 +1,10 @@
 "use strict";
 
 TOMATO.CharacterMaterialLib = [
-	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/red.png") }),
-	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/green.png") }),
-	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/yellow.png") }),
-	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/blue.png") })
+	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/red.png"), transparent: true }),
+	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/green.png"), transparent: true }),
+	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/yellow.png"), transparent: true }),
+	new THREE.MeshBasicMaterial({ map: loadTexture("assets/characters/blue.png"), transparent: true })
 ];
 
 

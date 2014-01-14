@@ -47,19 +47,13 @@ TOMATO.Game.prototype.remove = function(entity) {
 };
 
 TOMATO.Game.prototype.createPlayer = function(params) {
-	var playerMaterials = [
-		new THREE.MeshBasicMaterial({ color: 0x22aa22 }),
-		new THREE.MeshBasicMaterial({ color: 0xaa2222 }),
-		new THREE.MeshBasicMaterial({ color: 0xaaaa22 }),
-		new THREE.MeshBasicMaterial({ color: 0xaa2222 })
-	];
 	var def = {
 		controller: !!params.controller,
 		size: { x: 0.8, y: 0.8 },
 		physics: { mass: 50.0, shape: "circle" }
 	};
 	var start = this.world.starts[this.playerCount % this.world.starts.length];
-	var mat = playerMaterials[this.playerCount % playerMaterials.length];
+	var mat = TOMATO.CharacterMaterialLib[this.playerCount % TOMATO.CharacterMaterialLib.length];
 
 	var pl = new TOMATO.Entity(params.id);
 	pl.status = new TOMATO.Status(pl);
