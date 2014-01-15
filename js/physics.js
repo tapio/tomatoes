@@ -3,6 +3,20 @@
 TOMATO.PhysicsSystem = function() {
 	this.world = new Box2D.b2World(new Box2D.b2Vec2(0.0, -9.81));
 	this.listener = new Box2D.b2ContactListener();
+
+	this.rayCastCallback = new Box2D.b2RayCastCallback();
+	Box2D.customizeVTable(this.rayCastCallback, [{
+		original: Box2D.b2RayCastCallback.prototype.ReportFixture,
+		replacement:
+			function(thsPtr, fixturePtr, point, normal, fraction) {
+				var ths = Box2D.wrapPointer(thsPtr, Box2D.b2RayCastCallback);
+				var fixture = Box2D.wrapPointer(fixturePtr, Box2D.b2Fixture);
+				ths.fixture = fixture;
+				ths.fraction = fraction;
+				//console.log(fixture, point, normal, fraction);
+				return fraction;
+			}
+	}]);
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
@@ -89,4 +103,12 @@ TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
 	fixtureDef.set_shape(chainShape);
 	body.CreateFixture(fixtureDef);
 };
+
+TOMATO.PhysicsSystem.prototype.rayCast = function(x1, y1, x2, y2) {
+	var p1 = new Box2D.b2Vec2(x1, y1);
+	var p2 = new Box2D.b2Vec2(x2, y2);
+	this.rayCastCallback.fixture = null;
+	this.world.RayCast(this.rayCastCallback, p1, p2);
+	return this.rayCastCallback.fixture;
+}
 
