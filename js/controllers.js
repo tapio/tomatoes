@@ -3,7 +3,7 @@
 TOMATO.Controller = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.moveForce = 10.0;
-	this.jumpForce = 12.0;
+	this.jumpForce = 60.0;
 	this.brakeForce = -0.1;
 	this.moveInput = 0;
 	this.jumpInput = 0;
@@ -17,12 +17,17 @@ TOMATO.Controller.prototype.update = function(dt) {
 	if (body) {
 		var ZERO = new Box2D.b2Vec2(0, 0);
 		var steer = this.moveInput * this.moveForce;
-		var jump = !this.entity.status.airborne ? this.jumpInput * this.jumpForce : 0;
+		var jump = this.jumpInput * this.jumpForce;
+		if (this.entity.status.airborne) {
+			if (jump > 0) jump = 0;
+			else jump *= 0.5;
+			steer *= 0.5;
+		}
 		var vec = new Box2D.b2Vec2(steer, jump);
 		body.ApplyLinearImpulse(vec, ZERO);
 		vec = body.GetLinearVelocity();
 		vec.set_x(vec.get_x() * this.brakeForce);
-		vec.set_y(vec.get_y() * this.brakeForce);
+		vec.set_y(0);
 		body.ApplyLinearImpulse(vec, ZERO);
 	}
 };
