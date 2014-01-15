@@ -8,6 +8,7 @@ function init() {
 	//dumpInfo();
 
 	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
+	TOMATO.game.createPlayer({ controller: "keyboard2" });
 	TOMATO.game.createPlayer({ controller: "ai" });
 
 	pl.client = new TOMATO.Client(pl);

@@ -26,8 +26,9 @@ TOMATO.Controller.prototype.update = function(dt) {
 };
 
 
-TOMATO.KeyboardController = function(entity) {
+TOMATO.KeyboardController = function(entity, mapping) {
 	TOMATO.Controller.call(this, entity);
+	this.mapping = mapping;
 
 	var pressed = [];
 
@@ -49,20 +50,16 @@ TOMATO.KeyboardController = function(entity) {
 		this.jumpInput = 0;
 
 		// Jump / climb
-		if ((pressed[87] || pressed[38]) && !this.entity.status.airborne) { // W || Up
-			this.jumpInput = 1;
-		} else if (pressed[83] || pressed[40]) { // S || Down
-			this.jumpInput = -1;
-		}
+		if (pressed[this.mapping.up]) this.jumpInput = 1;
+		else if (pressed[this.mapping.down]) this.jumpInput = -1;
 		// Steering
-		if (pressed[65] || pressed[37]) { // A || Left
-			this.moveInput = -1;
-		} else if (pressed[68] || pressed[39]) { // D || Right
-			this.moveInput = 1;
-		}
+		if (pressed[this.mapping.left]) this.moveInput = -1;
+		else if (pressed[this.mapping.right]) this.moveInput = 1;
 	};
 };
 TOMATO.KeyboardController.prototype = Object.create(TOMATO.Controller.prototype);
+TOMATO.KeyboardController.DefaultMapping1 = { up: 38, down: 40, left: 37, right: 39 } // Arrows
+TOMATO.KeyboardController.DefaultMapping2 = { up: 87, down: 83, left: 65, right: 68 } // WASD
 
 
 TOMATO.GamepadController = function(entity) {
