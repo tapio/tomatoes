@@ -52,4 +52,4 @@ TOMATO.Sprite = function(entity, geometry, material) {
 	TOMATO.Visual.call(this, entity);
 	this.mesh = new THREE.Mesh(geometry, material);
 };
-TOMATO.Visual.prototype = Object.create(TOMATO.Visual.prototype);
+TOMATO.Sprite.prototype = Object.create(TOMATO.Visual.prototype);
