@@ -1,7 +1,7 @@
 "use strict";
 
 var clock = new THREE.Clock();
-TOMATO.cache = new TOMATO.Cache(assets);
+TOMATO.cache = new TOMATO.Cache();
 TOMATO.game = new TOMATO.Game();
 
 function init() {

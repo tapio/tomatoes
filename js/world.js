@@ -14,7 +14,7 @@ TOMATO.World = function(level) {
 
 	// Background
 	var bg = new TOMATO.Entity(null);
-	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture("assets/backgrounds/" + level.background), overdraw: true });
+	var bgMaterial = TOMATO.cache.getMaterial("backgrounds/" + level.background);
 	bg.visual = new TOMATO.Sprite(bg, new TOMATO.SpriteGeometry(this.width, this.height), bgMaterial);
 	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
 	TOMATO.game.add(bg);
@@ -48,10 +48,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width) {
 		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
 		THREE.GeometryUtils.merge(geo, tempMesh);
 	}
-	var mat = new THREE.MeshBasicMaterial({
-		map: loadTexture("assets/tiles/" + def.sprite),
-		transparent: true, overdraw: true
-	});
+	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x + width/2, y, 0);
 	entity.body = TOMATO.game.physicsSystem.createBody({
@@ -79,27 +76,24 @@ TOMATO.World.prototype.addWater = function(def) {
 			THREE.GeometryUtils.merge(geo, tempMesh);
 		}
 	}
-	var mat = new THREE.MeshBasicMaterial({
-		map: loadTexture("assets/tiles/" + def.sprite),
-		transparent: true, overdraw: true
-	});
+	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	TOMATO.game.add(entity);
 }
 
 TOMATO.World.prototype.createObject = function(def, x, y) {
 	var entity = new TOMATO.Entity();
+	// Determine if the entity needs tracking
 	if (!def.mass) entity.id = null;
+	// Visuals
 	if (def.sprite) {
-		var mat = new THREE.MeshBasicMaterial({
-			map: loadTexture("assets/" + def.sprite),
-			transparent: true, overdraw: true
-		});
+		var mat = TOMATO.cache.getMaterial(def.sprite);
 		var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
 		geo.dynamic = false;
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.visual.mesh.position.set(x, y, 0);
 	}
+	// Physics
 	if (def.collision)
 		entity.body = TOMATO.game.physicsSystem.createBody(def, x, y);
 	return entity;
