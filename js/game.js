@@ -102,7 +102,7 @@ TOMATO.Game.prototype.update = function(dt) {
 			var meshPos = visual.mesh.position;
 			meshPos.x = pos.get_x();
 			meshPos.y = pos.get_y();
-			meshPos.z = rot;
+			visual.mesh.rotation.z = rot;
 		}
 	}
 };
