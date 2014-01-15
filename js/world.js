@@ -14,6 +14,7 @@ var chars = {
 	BUSH: "b",
 	PLANT: "p",
 	CACTUS: "c",
+	ROCK: "R",
 	WATER: "W",
 	WATER_TOP: "~"
 };
@@ -33,7 +34,7 @@ var level = {
 		"                             H          ",
 		"                             H          ",
 		"                             H S        ",
-		"        h    X            (######)      ",
+		"        h R  X            (######)      ",
 		"      (#H#####)                         ",
 		"        H                               ",
 		"        H                               ",
@@ -55,7 +56,8 @@ var level = {
 	],
 	background: "assets/backgrounds/sky.png",
 	tileset: "assets/tiles/",
-	clutters: "assets/clutter/"
+	clutters: "assets/clutter/",
+	objects: "assets/objects/"
 };
 
 TOMATO.World = function(game) {
@@ -70,20 +72,21 @@ TOMATO.World = function(game) {
 	// Materials
 	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background) });
 	var materials = {};
-	materials[chars.WATER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-mid.png") });
+	materials[chars.WATER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water.png") });
 	materials[chars.WATER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-top.png") });
-	materials[chars.GROUND] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-mid.png") });
+	materials[chars.GROUND] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass.png") });
 	materials[chars.GROUND_LEFT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-left.png") });
 	materials[chars.GROUND_RIGHT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "grass-right.png") });
-	materials[chars.LADDER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "ladder-mid.png") });
+	materials[chars.LADDER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "ladder.png") });
 	materials[chars.LADDER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "ladder-top.png") });
 	materials[chars.BRIDGE] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "bridge.png") });
-	materials[chars.BOX] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "box.png") });
+	materials[chars.BOX] = new THREE.MeshBasicMaterial({ map: loadTexture(level.objects + "box.png") });
 	materials[chars.MUSHROOM1] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "mushroom-brown.png") });
 	materials[chars.MUSHROOM2] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "mushroom-red.png") });
 	materials[chars.BUSH] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "bush.png") });
 	materials[chars.PLANT] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "plant.png") });
 	materials[chars.CACTUS] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "cactus.png") });
+	materials[chars.ROCK] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "rock.png") });
 	for (var m in materials) {
 		materials[m].transparent = true;
 	}
@@ -137,6 +140,7 @@ TOMATO.World = function(game) {
 				case chars.BUSH:
 				case chars.PLANT:
 				case chars.CACTUS:
+				case chars.ROCK:
 					entity.id = null;
 					break;
 				case chars.WATER:
