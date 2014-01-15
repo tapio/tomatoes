@@ -30,5 +30,26 @@ var assets = {
 		{ size: {x:0.8,y:0.8}, sprite: "green.png" },
 		{ size: {x:0.8,y:0.8}, sprite: "yellow.png" },
 		{ size: {x:0.8,y:0.8}, sprite: "blue.png" }
+	],
+	levels: [
+		{
+			name: "Grass",
+			tiles: {
+				platform: "grass",
+				bridge: "bridge",
+				ladder: "ladder",
+				water: "water"
+			},
+			objects: {
+				"box": 5
+			},
+			clutter: {
+				"bush-small": 2,
+				"bush-large": 2,
+				"plant-tine": 5,
+				"mushroom1": 2,
+				"mushroom2": 2
+			}
+		}
 	]
 };
