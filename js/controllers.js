@@ -16,7 +16,9 @@ TOMATO.Controller.prototype.update = function(dt) {
 	var body = this.entity.body;
 	if (body) {
 		var ZERO = new Box2D.b2Vec2(0, 0);
-		var vec = new Box2D.b2Vec2(this.moveInput * this.moveForce, this.jumpInput * this.jumpForce);
+		var steer = this.moveInput * this.moveForce;
+		var jump = !this.entity.status.airborne ? this.jumpInput * this.jumpForce : 0;
+		var vec = new Box2D.b2Vec2(steer, jump);
 		body.ApplyLinearImpulse(vec, ZERO);
 		vec = body.GetLinearVelocity();
 		vec.set_x(vec.get_x() * this.brakeForce);

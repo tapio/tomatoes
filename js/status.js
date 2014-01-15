@@ -13,9 +13,16 @@ TOMATO.Status.prototype.update = function(dt) {
 
 	var pos = this.entity.getPosition();
 
+	// Check drowning
 	if (pos.y < TOMATO.game.world.waterLevel) {
 		this.kill();
 		return;
+	}
+
+	// Check airborne status
+	if (this.entity.controller) {
+		// TODO: Proper height offset
+		this.airborne = !TOMATO.game.physicsSystem.rayCast(pos.x, pos.y, pos.x, pos.y - 0.6);
 	}
 };
 
