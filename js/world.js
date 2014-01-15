@@ -20,14 +20,14 @@ TOMATO.World = function(level) {
 	TOMATO.game.add(bg);
 
 	// Platforms
-	this.createPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10);
+	TOMATO.game.add(this.createPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10));
 
 	// Objects
-	this.createObject(assets.objects.box, this.width / 2, this.height / 2);
+	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2, this.height / 2));
 
 	// Water
 	for (i = 0; i < this.waterLevel / this.gridSize; ++i) {
-		this.createPlatform(assets.blocks[level.tiles.water], 0, i, this.width);
+		TOMATO.game.add(this.createPlatform(assets.blocks[level.tiles.water], 0, i, this.width));
 	}
 
 	// World borders
@@ -48,7 +48,6 @@ TOMATO.World.prototype.createPlatform = function(def, x, y, width) {
 		var tempGeo = new TOMATO.SpriteGeometry(this.gridSize, this.gridSize, tile, 0, 3, 1);
 		tempMesh.geometry = tempGeo;
 		tempMesh.position.x = i * this.gridSize + this.gridSize / 2 - width / 2;
-		console.log(tempMesh.position.x, tile);
 		THREE.GeometryUtils.merge(geo, tempMesh);
 	}
 	var mat = new THREE.MeshBasicMaterial({
@@ -62,7 +61,6 @@ TOMATO.World.prototype.createPlatform = function(def, x, y, width) {
 		collision: def.collision,
 		mass: def.mass
 	}, x + width/2, y);
-	TOMATO.game.add(entity);
 	return entity;
 };
 
@@ -71,7 +69,7 @@ TOMATO.World.prototype.createObject = function(def, x, y) {
 	if (!def.mass) entity.id = null;
 	if (def.sprite) {
 		var mat = new THREE.MeshBasicMaterial({
-			map: loadTexture("assets/objects/" + def.sprite),
+			map: loadTexture("assets/" + def.sprite),
 			transparent: true, overdraw: true
 		});
 		var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
@@ -81,6 +79,5 @@ TOMATO.World.prototype.createObject = function(def, x, y) {
 	}
 	if (def.collision)
 		entity.body = TOMATO.game.physicsSystem.createBody(def, x, y);
-	TOMATO.game.add(entity);
 	return entity;
 };

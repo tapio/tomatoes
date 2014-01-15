@@ -47,18 +47,11 @@ TOMATO.Game.prototype.remove = function(entity) {
 };
 
 TOMATO.Game.prototype.createPlayer = function(params) {
-	var def = {
-		controller: !!params.controller,
-		size: { x: 0.8, y: 0.8 },
-		collision: "circle", mass: 50.0
-	};
 	var start = this.world.starts[this.playerCount % this.world.starts.length];
-	var mat = TOMATO.CharacterMaterialLib[this.playerCount % TOMATO.CharacterMaterialLib.length];
-
-	var pl = new TOMATO.Entity(params.id);
+	var def = assets.characters[this.playerCount % assets.characters.length];
+	var pl = this.world.createObject(def, start.x, start.y);
+	if (params.id !== undefined) pl.id = params.id;
 	pl.status = new TOMATO.Status(pl);
-	pl.visual = new TOMATO.Sprite(pl, new TOMATO.SpriteGeometry(def.size.x, def.size.y), mat);
-	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	pl.body.entity = pl;
 	switch (params.controller) {
 		case "keyboard1": pl.controller = new TOMATO.KeyboardController(pl, TOMATO.KeyboardController.DefaultMapping1); break;

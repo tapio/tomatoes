@@ -41,7 +41,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	var bodyDef = new Box2D.b2BodyDef();
 	bodyDef.set_type(def.mass ? Box2D.b2_dynamicBody : Box2D.b2_staticBody);
 	bodyDef.set_position(new Box2D.b2Vec2(x || 0.0, y || 0.0));
-	bodyDef.set_fixedRotation(def.controller ? true : false);
+	bodyDef.set_fixedRotation(def.character ? true : false);
 
 	var fixtureDef = new Box2D.b2FixtureDef();
 	fixtureDef.set_density(def.mass || 0);
