@@ -5,7 +5,7 @@ var cache = new TOMATO.Cache();
 TOMATO.game = new TOMATO.Game();
 
 function init() {
-	dumpInfo();
+	//dumpInfo();
 
 	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
 	TOMATO.game.createPlayer({ controller: "ai" });

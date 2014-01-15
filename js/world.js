@@ -70,7 +70,7 @@ TOMATO.World = function(game) {
 	this.starts = [];
 
 	// Materials
-	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background) });
+	var bgMaterial = new THREE.MeshBasicMaterial({ map: loadTexture(level.background), overdraw: true });
 	var materials = {};
 	materials[chars.WATER] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water.png") });
 	materials[chars.WATER_TOP] = new THREE.MeshBasicMaterial({ map: loadTexture(level.tileset + "water-top.png") });
@@ -89,6 +89,7 @@ TOMATO.World = function(game) {
 	materials[chars.ROCK] = new THREE.MeshBasicMaterial({ map: loadTexture(level.clutters + "rock.png") });
 	for (var m in materials) {
 		materials[m].transparent = true;
+		materials[m].overdraw = true;
 	}
 
 	// Background

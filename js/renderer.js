@@ -1,10 +1,11 @@
 "use strict";
 
 TOMATO.RenderSystem = function() {
-	this.renderer = new THREE.WebGLRenderer({
-		antialias: true,
-		preserveDrawingBuffer: true
-	});
+	this.renderer = window.WebGLRenderingContext ?
+		new THREE.WebGLRenderer({
+			antialias: true,
+			preserveDrawingBuffer: true
+		}) : new THREE.CanvasRenderer();
 	this.renderer.setClearColor(0x000000);
 	this.renderer.setSize(window.innerWidth, window.innerHeight);
 	this.renderer.gammaInput = true;
