@@ -1,11 +1,13 @@
 "use strict";
 
 var clock = new THREE.Clock();
-var cache = new TOMATO.Cache();
+TOMATO.cache = new TOMATO.Cache(assets);
 TOMATO.game = new TOMATO.Game();
 
 function init() {
 	//dumpInfo();
+
+	TOMATO.game.world = new TOMATO.World(assets.levels[0]);
 
 	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
 	TOMATO.game.createPlayer({ controller: "keyboard2" });

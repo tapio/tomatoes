@@ -8,7 +8,7 @@ TOMATO.Game = function() {
 	this.physicsSystem = new TOMATO.PhysicsSystem();
 	this.soundSystem = new TOMATO.SoundSystem();
 	this.powerUpSystem = new TOMATO.PowerUpSystem();
-	this.world = new TOMATO.World(this);
+	this.world = null;
 
 	//this.physicsSystem.setContactListener(function(a, b) {
 		//if (a.entity) console.log(a.entity);
@@ -50,14 +50,14 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	var def = {
 		controller: !!params.controller,
 		size: { x: 0.8, y: 0.8 },
-		physics: { mass: 50.0, shape: "circle" }
+		collision: "circle", mass: 50.0
 	};
 	var start = this.world.starts[this.playerCount % this.world.starts.length];
 	var mat = TOMATO.CharacterMaterialLib[this.playerCount % TOMATO.CharacterMaterialLib.length];
 
 	var pl = new TOMATO.Entity(params.id);
 	pl.status = new TOMATO.Status(pl);
-	pl.visual = new TOMATO.Sprite(pl, def.size.x, def.size.y, mat);
+	pl.visual = new TOMATO.Sprite(pl, new TOMATO.SpriteGeometry(def.size.x, def.size.y), mat);
 	pl.body = TOMATO.game.physicsSystem.createBody(def, start.x, start.y);
 	pl.body.entity = pl;
 	switch (params.controller) {

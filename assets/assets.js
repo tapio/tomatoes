@@ -34,6 +34,7 @@ var assets = {
 	levels: [
 		{
 			name: "Grass",
+			background: "sky.png",
 			tiles: {
 				platform: "grass",
 				bridge: "bridge",
