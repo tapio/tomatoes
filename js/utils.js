@@ -1,6 +1,6 @@
 "use strict";
 
-function lerp(a, b, f) { return (1.0 - f) * a + f * b; }
+function lerp(a, b, f) { return a + (b - a) * f; }
 
 function dumpInfo() {
 	var gl = TOMATO.game.renderSystem.renderer.context;
