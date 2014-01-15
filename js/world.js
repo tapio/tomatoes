@@ -1,12 +1,12 @@
 "use strict";
 
 TOMATO.World = function(level) {
-	this.gridSize = 1.0;
+	this.blockSize = 1.0;
 	var i;
 
-	this.width = 16 * 3 * this.gridSize;
-	this.height = 9 * 3 * this.gridSize;
-	this.waterLevel = 3 * this.gridSize;
+	this.width = 16 * 3 * this.blockSize;
+	this.height = 9 * 3 * this.blockSize;
+	this.waterLevel = 3 * this.blockSize;
 	this.starts = [
 		new THREE.Vector2(this.width * 0.333, this.height * 0.8),
 		new THREE.Vector2(this.width * 0.667, this.height * 0.8)
@@ -20,22 +20,20 @@ TOMATO.World = function(level) {
 	TOMATO.game.add(bg);
 
 	// Platforms
-	TOMATO.game.add(this.createPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10));
+	this.addPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10);
 
 	// Objects
 	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2, this.height / 2));
 
 	// Water
-	for (i = 0; i < this.waterLevel / this.gridSize; ++i) {
-		TOMATO.game.add(this.createPlatform(assets.blocks[level.tiles.water], 0, i, this.width));
-	}
+	this.addWater(assets.blocks[level.tiles.water]);
 
 	// World borders
 	TOMATO.game.physicsSystem.createBorders(0, this.height, this.width, 0);
 };
 
 
-TOMATO.World.prototype.createPlatform = function(def, x, y, width) {
+TOMATO.World.prototype.addPlatform = function(def, x, y, width) {
 	width = width | 0;
 	if (width < 2) throw("Too narrow platform");
 	var entity = new TOMATO.Entity(null);
@@ -45,9 +43,9 @@ TOMATO.World.prototype.createPlatform = function(def, x, y, width) {
 		var tile = 1;
 		if (i == 0) tile = 0;
 		else if (i == width-1) tile = 2;
-		var tempGeo = new TOMATO.SpriteGeometry(this.gridSize, this.gridSize, tile, 0, 3, 1);
+		var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, tile, 0, 3, 1);
 		tempMesh.geometry = tempGeo;
-		tempMesh.position.x = i * this.gridSize + this.gridSize / 2 - width / 2;
+		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
 		THREE.GeometryUtils.merge(geo, tempMesh);
 	}
 	var mat = new THREE.MeshBasicMaterial({
@@ -57,12 +55,37 @@ TOMATO.World.prototype.createPlatform = function(def, x, y, width) {
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x + width/2, y, 0);
 	entity.body = TOMATO.game.physicsSystem.createBody({
-		size: { x: this.gridSize * width, y: this.gridSize },
+		size: { x: this.blockSize * width, y: this.blockSize },
 		collision: def.collision,
 		mass: def.mass
 	}, x + width/2, y);
+	TOMATO.game.add(entity);
 	return entity;
 };
+
+TOMATO.World.prototype.addWater = function(def) {
+	var layers = (this.waterLevel / this.blockSize)|0;
+	var columns = (this.width / this.blockSize)|0;
+	var entity = new TOMATO.Entity(null);
+	var geo = new THREE.Geometry();
+	var tempMesh = new THREE.Mesh();
+	for (var j = 0; j < layers; ++j) {
+		for (var i = 0; i < columns; ++i) {
+			var tile = (j < layers - 1) ? 0 : 1;
+			var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, 0, tile, 1, 2);
+			tempMesh.geometry = tempGeo;
+			tempMesh.position.x = i * this.blockSize + this.blockSize / 2;
+			tempMesh.position.y = j * this.blockSize + this.blockSize / 2;
+			THREE.GeometryUtils.merge(geo, tempMesh);
+		}
+	}
+	var mat = new THREE.MeshBasicMaterial({
+		map: loadTexture("assets/tiles/" + def.sprite),
+		transparent: true, overdraw: true
+	});
+	entity.visual = new TOMATO.Sprite(entity, geo, mat);
+	TOMATO.game.add(entity);
+}
 
 TOMATO.World.prototype.createObject = function(def, x, y) {
 	var entity = new TOMATO.Entity();
