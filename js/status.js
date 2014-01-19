@@ -5,17 +5,19 @@ TOMATO.Status = function(entity) {
 	this.dead = false;
 	this.airborne = false;
 	this.respawns = Infinity;
+	this.lifeTime = Infinity;
 	this.powerUp = null;
 };
 TOMATO.Status.prototype = Object.create(TOMATO.Component.prototype);
 
 TOMATO.Status.prototype.update = function(dt) {
 	if (this.dead) return;
+	this.lifeTime -= dt;
 
 	var pos = this.entity.getPosition();
 
-	// Check drowning
-	if (pos.y < TOMATO.game.world.waterLevel) {
+	// Check drowning and life time
+	if (pos.y < TOMATO.game.world.waterLevel || this.lifeTime <= 0) {
 		this.kill();
 		return;
 	}

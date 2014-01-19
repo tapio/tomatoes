@@ -10,11 +10,12 @@ TOMATO.PowerUpSystem.prototype.spawnPowerUp = function() {
 	var def = assets.powerups["weight"];
 	var power = TOMATO.game.world.createObject(def,
 		THREE.Math.randInt(1, TOMATO.game.world.width - 2),
-		THREE.Math.randInt(TOMATO.game.world.waterLevel, TOMATO.game.world.height - 1)
+		THREE.Math.randInt(TOMATO.game.world.waterLevel + 5, TOMATO.game.world.height - 1)
 	);
 	power.powerUp = def;
 	power.status = new TOMATO.Status(power);
 	power.status.respawns = 0;
+	power.status.lifeTime = 5;
 	TOMATO.game.add(power);
 };
 
