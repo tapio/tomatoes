@@ -30,9 +30,10 @@ TOMATO.World = function(level) {
 
 	// Platforms
 	var platform = assets.blocks[level.tiles.platform];
-	this.addPlatform(platform, 5, this.waterLevel + 5, this.width - 10, clutter);
+	this.addPlatform(platform, 5, this.waterLevel + 5, this.width - 16, clutter);
 	this.addPlatform(platform, 14, this.waterLevel + 7, 10, clutter);
 	this.addPlatform(platform, 25, this.waterLevel + 9, 10, clutter);
+	this.addPlatform(platform, 38, this.waterLevel + 6, 8, clutter);
 
 	// Ladders
 	var ladder = assets.blocks[level.tiles.ladder];
@@ -41,7 +42,7 @@ TOMATO.World = function(level) {
 	this.addLadder(ladder, this.width/2, this.waterLevel+6, 2);
 
 	// Objects
-	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2, this.height / 2));
+	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2 + 2, this.height / 2));
 
 	// Water
 	this.addWater(assets.blocks[level.tiles.water]);
