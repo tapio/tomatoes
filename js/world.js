@@ -12,6 +12,16 @@ TOMATO.World = function(level) {
 		new THREE.Vector2(this.width * 0.667, this.height * 0.8)
 	];
 
+	// Clutter definitions
+	var clutter = [];
+	clutter.probability = level.clutterProbability || 0;
+	for (var c in level.clutter) {
+		for (i = 0; i < level.clutter[c]; ++i) {
+			clutter.push(c);
+		}
+	}
+	console.log(clutter, clutter.length);
+
 	// Background
 	var bg = new TOMATO.Entity(null);
 	var bgMaterial = TOMATO.cache.getMaterial("backgrounds/" + level.background);
@@ -20,7 +30,7 @@ TOMATO.World = function(level) {
 	TOMATO.game.add(bg);
 
 	// Platforms
-	this.addPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10, level.clutter);
+	this.addPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10, clutter);
 
 	// Ladders
 	this.addLadder(assets.blocks[level.tiles.ladder], 0, this.waterLevel, 5);
@@ -53,7 +63,8 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
 		THREE.GeometryUtils.merge(geo, tempMesh);
 		if (clutter && Math.random() < clutter.probability) {
-			TOMATO.game.add(this.createObject(assets.clutter["plant-tiny"], x + i * this.blockSize , y + this.blockSize));
+			var c = clutter[(Math.random() * clutter.length)|0];
+			TOMATO.game.add(this.createObject(assets.clutter[c], x + i * this.blockSize , y + this.blockSize));
 		}
 	}
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);

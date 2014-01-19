@@ -12,7 +12,7 @@ var assets = {
 	},
 	clutter: {
 		"bush-small": { size: {x:1,y:1}, sprite: "clutter/bush.png" },
-		"bush-large": { size: {x:2,y:1.5}, sprite: "clutter/bush.png" },
+		"bush-large": { size: {x:2,y:1}, sprite: "clutter/bush.png" },
 		"cactus": { size: {x:1.5,y:2}, sprite: "clutter/cactus.png" },
 		"plant-tiny": { size: {x:1,y:1}, sprite: "clutter/plant.png" },
 		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
@@ -44,11 +44,11 @@ var assets = {
 			objects: {
 				"box": 5
 			},
+			clutterProbability: 0.25,
 			clutter: {
-				"probability": 0.2,
 				"bush-small": 2,
 				"bush-large": 2,
-				"plant-tine": 5,
+				"plant-tiny": 5,
 				"mushroom1": 2,
 				"mushroom2": 2
 			}
