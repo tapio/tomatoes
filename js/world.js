@@ -132,8 +132,6 @@ TOMATO.World.prototype.createObject = function(def, x, y) {
 	var entity = new TOMATO.Entity();
 	x += def.size.x / 2;
 	y += def.size.y / 2;
-	// Determine if the entity needs tracking
-	if (!def.mass) entity.id = null;
 	// Visuals
 	if (def.sprite) {
 		var mat = TOMATO.cache.getMaterial(def.sprite);
@@ -145,5 +143,8 @@ TOMATO.World.prototype.createObject = function(def, x, y) {
 	// Physics
 	if (def.collision)
 		entity.body = TOMATO.game.physicsSystem.createBody(def, x, y);
+	// Determine if the entity needs tracking
+	if (!def.mass) entity.id = null;
+	else entity.body.entity = entity;
 	return entity;
 };

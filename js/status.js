@@ -5,6 +5,7 @@ TOMATO.Status = function(entity) {
 	this.dead = false;
 	this.airborne = false;
 	this.respawns = Infinity;
+	this.powerUp = null;
 };
 TOMATO.Status.prototype = Object.create(TOMATO.Component.prototype);
 
@@ -31,7 +32,6 @@ TOMATO.Status.prototype.kill = function() {
 		this.dead = true;
 		if (this.entity.controller)
 			this.entity.controller.enabled = false;
-		console.log("Player " + this.entity.id + " died");
 	}
 };
 
@@ -44,4 +44,8 @@ TOMATO.Status.prototype.respawn = function() {
 		return true;
 	}
 	return false;
+};
+
+TOMATO.Status.prototype.setPowerUp = function(powerUp) {
+	this.powerUp = powerUp;
 };

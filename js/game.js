@@ -10,10 +10,19 @@ TOMATO.Game = function() {
 	this.powerUpSystem = new TOMATO.PowerUpSystem();
 	this.world = null;
 
-	//this.physicsSystem.setContactListener(function(a, b) {
-		//if (a.entity) console.log(a.entity);
-		//if (b.entity) console.log(b.entity);
-	//});
+	this.physicsSystem.setContactListener(function(a, b) {
+		var aa = a.entity, bb = b.entity;
+		if (!aa || !bb) return;
+		if (aa.powerUp && bb.powerUp) return;
+		if (aa.status && bb.powerUp) {
+			aa.status.setPowerUp(bb.powerUp);
+			bb.status.kill();
+		}
+		else if (bb.status && aa.powerUp) {
+			bb.status.setPowerUp(aa.powerUp);
+			aa.status.kill();
+		}
+	});
 };
 
 TOMATO.Game.prototype.add = function(entity) {
@@ -52,7 +61,6 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	var pl = this.world.createObject(def, start.x, start.y);
 	if (params.id !== undefined) pl.id = params.id;
 	pl.status = new TOMATO.Status(pl);
-	pl.body.entity = pl;
 	switch (params.controller) {
 		case "keyboard1": pl.controller = new TOMATO.KeyboardController(pl, TOMATO.KeyboardController.DefaultMapping1); break;
 		case "keyboard2": pl.controller = new TOMATO.KeyboardController(pl, TOMATO.KeyboardController.DefaultMapping2); break;
@@ -100,6 +108,14 @@ TOMATO.Game.prototype.update = function(dt) {
 			meshPos.x = pos.get_x();
 			meshPos.y = pos.get_y();
 			visual.mesh.rotation.z = rot;
+		}
+	}
+
+	// Remove dead
+	for (i = this.entities.length-1; i >= 0; --i) {
+		var entity = this.entities[i];
+		if (entity && entity.status && entity.status.dead) {
+			this.remove(entity);
 		}
 	}
 };
