@@ -18,11 +18,14 @@ TOMATO.Game = function() {
 			aa.status.setPowerUp(bb.powerUp);
 			bb.status.kill();
 			TOMATO.game.soundSystem.play("pickup");
+			return;
 		} else if (bb.status && aa.powerUp) {
 			bb.status.setPowerUp(aa.powerUp);
 			aa.status.kill();
 			TOMATO.game.soundSystem.play("pickup");
+			return;
 		}
+		TOMATO.game.soundSystem.play("bump");
 	});
 };
 

@@ -37,7 +37,8 @@ var assets = {
 		{ size: {x:0.8,y:0.8}, sprite: "characters/blue.png", collision: "circle", mass: 50, character: true }
 	],
 	sounds: {
-		"pickup": [ "power-up.ogg" ]
+		"pickup": [ "power-up.ogg" ],
+		"bump": [ "bump1.ogg", "bump2.ogg", "bump3.ogg" ]
 	},
 	levels: [
 		{
