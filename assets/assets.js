@@ -17,10 +17,13 @@ var assets = {
 		"plant-tiny": { size: {x:1,y:1}, sprite: "clutter/plant.png" },
 		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
 		"mushroom2": { size: {x:1,y:1}, sprite: "clutter/mushroom-red.png" },
-		"rock": { size: {x:1,y:1}, sprite: "clutter/rock.png" }
+		"rock": { size: {x:1,y:1}, sprite: "clutter/rock.png" },
+		"rock2": { size: {x:1,y:1}, sprite: "clutter/rock2.png" }
 	},
 	objects: {
-		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 10 }
+		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 10 },
+		"dirt-rock": { size: {x:0.7,y:0.7}, sprite: "objects/dirt-rock.png", collision: "circle", mass: 100 },
+		"stone": { size: {x:0.7,y:0.7}, sprite: "objects/stone.png", collision: "circle", mass: 150 }
 	},
 	powerups: {
 

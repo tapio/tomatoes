@@ -43,6 +43,9 @@ TOMATO.World = function(level) {
 
 	// Objects
 	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2 + 2, this.height / 2));
+	TOMATO.game.add(this.createObject(assets.objects.box, 7, this.waterLevel + 6));
+	TOMATO.game.add(this.createObject(assets.objects["dirt-rock"], 15, this.waterLevel + 8));
+	TOMATO.game.add(this.createObject(assets.objects["stone"], 19, this.waterLevel + 8));
 
 	// Water
 	this.addWater(assets.blocks[level.tiles.water]);
