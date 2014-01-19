@@ -20,7 +20,7 @@ TOMATO.World = function(level) {
 	TOMATO.game.add(bg);
 
 	// Platforms
-	this.addPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10);
+	this.addPlatform(assets.blocks[level.tiles.platform], 5, this.waterLevel + 5, this.width - 10, level.clutter);
 
 	// Ladders
 	this.addLadder(assets.blocks[level.tiles.ladder], 0, this.waterLevel, 5);
@@ -38,7 +38,7 @@ TOMATO.World = function(level) {
 };
 
 
-TOMATO.World.prototype.addPlatform = function(def, x, y, width) {
+TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 	width = width | 0;
 	if (width < 2) throw("Too narrow platform");
 	var entity = new TOMATO.Entity(null);
@@ -51,12 +51,14 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width) {
 		var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, tile, 0, 3, 1);
 		tempMesh.geometry = tempGeo;
 		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
-		tempMesh.position.y = this.blockSize / 2;
 		THREE.GeometryUtils.merge(geo, tempMesh);
+		if (clutter && Math.random() < clutter.probability) {
+			TOMATO.game.add(this.createObject(assets.clutter["plant-tiny"], x + i * this.blockSize , y + this.blockSize));
+		}
 	}
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
-	entity.visual.mesh.position.set(x + width / 2, y, 0);
+	entity.visual.mesh.position.set(x + width / 2, y + this.blockSize / 2, 0);
 	entity.body = TOMATO.game.physicsSystem.createBody({
 		size: { x: this.blockSize * width, y: this.blockSize },
 		collision: def.collision,
@@ -83,11 +85,6 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x, y + height/2, 0);
-	//entity.body = TOMATO.game.physicsSystem.createBody({
-	//	size: { x: this.blockSize, y: this.blockSize * height },
-	//	collision: def.collision,
-	//	mass: def.mass
-	//}, x, y + height / 2);
 	TOMATO.game.add(entity);
 	return entity;
 };

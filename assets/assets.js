@@ -45,6 +45,7 @@ var assets = {
 				"box": 5
 			},
 			clutter: {
+				"probability": 0.2,
 				"bush-small": 2,
 				"bush-large": 2,
 				"plant-tine": 5,
