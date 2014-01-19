@@ -21,9 +21,14 @@ TOMATO.RulesSystem.prototype.add = function(player) {
 };
 
 TOMATO.RulesSystem.prototype.update = function(dt) {
+	var playersAlive = 0;
 	for (var i = 0; i < this.players.length; ++i) {
 		var pl = this.players[i];
 		var status = pl.status;
 		pl.domPoints.innerHTML = /*"☠" + status.deaths +*/ "❤" + status.respawns;
+		if (!status.dead) ++playersAlive;
+	}
+	if (playersAlive <= 1) {
+		TOMATO.game.running = false;
 	}
 };
