@@ -4,9 +4,10 @@ TOMATO.Status = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.dead = false;
 	this.airborne = false;
-	this.respawns = Infinity;
+	this.respawns = 10;
 	this.lifeTime = Infinity;
 	this.powerUp = null;
+	this.deaths = 0;
 };
 TOMATO.Status.prototype = Object.create(TOMATO.Component.prototype);
 
@@ -30,6 +31,7 @@ TOMATO.Status.prototype.update = function(dt) {
 };
 
 TOMATO.Status.prototype.kill = function() {
+	++this.deaths;
 	if (!this.respawn()) {
 		this.dead = true;
 		if (this.entity.controller)

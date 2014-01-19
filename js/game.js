@@ -8,7 +8,9 @@ TOMATO.Game = function() {
 	this.physicsSystem = new TOMATO.PhysicsSystem();
 	this.soundSystem = new TOMATO.SoundSystem();
 	this.powerUpSystem = new TOMATO.PowerUpSystem();
+	this.rulesSystem = new TOMATO.RulesSystem();
 	this.world = null;
+	this.running = true;
 
 	this.physicsSystem.setContactListener(function(a, b) {
 		var aa = a.entity, bb = b.entity;
@@ -75,12 +77,14 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 		default: console.error("Invalid params.controller: " + params.controller); break;
 	}
 	this.add(pl);
+	this.rulesSystem.add(pl);
 	this.renderSystem.follow(pl);
 	this.playerCount++;
 	return pl;
 };
 
 TOMATO.Game.prototype.update = function(dt) {
+	if (!this.running) return;
 	var i, c;
 	// Update components
 	for (i = 0; i < this.entities.length; ++i) {
@@ -99,6 +103,7 @@ TOMATO.Game.prototype.update = function(dt) {
 	// Update systems
 	this.powerUpSystem.update(dt);
 	this.physicsSystem.update(dt);
+	this.rulesSystem.update(dt);
 	this.renderSystem.update(dt);
 
 	// Sync render and physics

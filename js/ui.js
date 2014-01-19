@@ -5,13 +5,7 @@ TOMATO.initUI = function() {
 	container.appendChild(TOMATO.game.renderSystem.renderer.domElement);
 
 	TOMATO.renderStats = new Stats();
-	TOMATO.renderStats.domElement.style.position = 'absolute';
-	TOMATO.renderStats.domElement.style.bottom = '0px';
 	container.appendChild(TOMATO.renderStats.domElement);
-
-	if (!CONFIG.showStats) {
-		TOMATO.renderStats.domElement.style.display = "none";
-	}
 };
 
 TOMATO.updateUI = function(dt) {

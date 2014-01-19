@@ -4,7 +4,6 @@ body {
 	color: #61443e;
 	font-family: 'Love Ya Like A Sister', serif;
 	font-size: 13px;
-	text-align:center;
 	background-color: #000;
 	margin: 0px;
 	overflow: hidden;
@@ -47,4 +46,32 @@ canvas {
 	font-size: 1.8em;
 	width: auto;
 	color: #c00;
+}
+
+#stats {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+#points-container {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	text-align: left;
+	color: #f66;
+	font-size: 20px;
+}
+
+.points-row {
+	margin-bottom: 3px;
+}
+
+.icon {
+	width: 24px;
+	margin-right: 10px;
+}
+
+.points {
+	vertical-align: bottom;
 }
