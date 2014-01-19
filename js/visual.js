@@ -7,7 +7,6 @@ TOMATO.SpriteGeometry = function(width, height, tileX, tileY, numHorTiles, numVe
 	numVerTiles = numVerTiles || 1;
 	tileX = tileX || 0;
 	tileY = tileY || 0;
-	tileY = numVerTiles - tileY - 1; // So that tileY 0 is topmost tile row
 
 	var hw = width * 0.5;
 	var hh = height * 0.5;
