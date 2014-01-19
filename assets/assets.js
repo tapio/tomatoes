@@ -18,7 +18,9 @@ var assets = {
 		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
 		"mushroom2": { size: {x:1,y:1}, sprite: "clutter/mushroom-red.png" },
 		"rock": { size: {x:1,y:1}, sprite: "clutter/rock.png" },
-		"rock2": { size: {x:1,y:1}, sprite: "clutter/rock2.png" }
+		"rock2": { size: {x:1,y:1}, sprite: "clutter/rock2.png" },
+		"rock-moss": { size: {x:0.9,y:0.9}, sprite: "clutter/rock-moss.png" },
+		"rock-moss2": { size: {x:0.9,y:0.8}, sprite: "clutter/rock-moss2.png" }
 	},
 	objects: {
 		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 10 },
@@ -52,6 +54,8 @@ var assets = {
 				"bush-small": 2,
 				"bush-large": 2,
 				"plant-tiny": 5,
+				"rock-moss": 2,
+				"rock-moss2": 1,
 				"mushroom1": 2,
 				"mushroom2": 2
 			}

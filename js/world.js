@@ -130,8 +130,8 @@ TOMATO.World.prototype.addWater = function(def) {
 
 TOMATO.World.prototype.createObject = function(def, x, y) {
 	var entity = new TOMATO.Entity();
-	x += this.blockSize / 2;
-	y += this.blockSize / 2;
+	x += def.size.x / 2;
+	y += def.size.y / 2;
 	// Determine if the entity needs tracking
 	if (!def.mass) entity.id = null;
 	// Visuals
