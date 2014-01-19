@@ -11,8 +11,8 @@ var assets = {
 		"lava": { sprite: "lava.png", water: true }
 	},
 	clutter: {
-		"bush-small": { size: {x:1,y:1}, sprite: "clutter/bush.png" },
-		"bush-large": { size: {x:2,y:1}, sprite: "clutter/bush.png" },
+		"bush-small": { size: {x:0.9,y:1}, sprite: "clutter/bush.png" },
+		"bush-large": { size: {x:1.8,y:1}, sprite: "clutter/bush.png" },
 		"cactus": { size: {x:1.5,y:2}, sprite: "clutter/cactus.png" },
 		"plant-tiny": { size: {x:1,y:1}, sprite: "clutter/plant.png" },
 		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
@@ -36,6 +36,9 @@ var assets = {
 		{ size: {x:0.8,y:0.8}, sprite: "characters/yellow.png", collision: "circle", mass: 50, character: true },
 		{ size: {x:0.8,y:0.8}, sprite: "characters/blue.png", collision: "circle", mass: 50, character: true }
 	],
+	sounds: {
+		"pickup": [ "power-up.ogg" ]
+	},
 	levels: [
 		{
 			name: "Grass",

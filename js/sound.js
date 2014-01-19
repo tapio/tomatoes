@@ -12,7 +12,6 @@ TOMATO.Sound = function(samples, minPlayers) {
 			this.samples.push(new Audio("assets/sounds/" + samples[i]));
 
 	this.play = function(volume) {
-		if (!CONFIG.sounds) return;
 		try { // Firefox fails at GitHub MIME types
 			var sample = this.samples[this.sampleIndex];
 			if (window.chrome) sample.load(); // Chrome requires reload

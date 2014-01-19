@@ -15,7 +15,7 @@ TOMATO.PowerUpSystem.prototype.spawnPowerUp = function() {
 	power.powerUp = def;
 	power.status = new TOMATO.Status(power);
 	power.status.respawns = 0;
-	power.status.lifeTime = 5;
+	power.status.lifeTime = 10;
 	TOMATO.game.add(power);
 };
 
