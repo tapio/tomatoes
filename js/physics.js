@@ -3,7 +3,8 @@
 TOMATO.PhysicsSystem = function() {
 	this.world = new Box2D.b2World(new Box2D.b2Vec2(0.0, -9.81));
 	this.listener = new Box2D.b2ContactListener();
-
+	this.timeStep = 1 / 60.0;
+	this.timeAccumulator = 0;
 	this.rayCastCallback = new Box2D.b2RayCastCallback();
 	Box2D.customizeVTable(this.rayCastCallback, [{
 		original: Box2D.b2RayCastCallback.prototype.ReportFixture,
@@ -20,10 +21,12 @@ TOMATO.PhysicsSystem = function() {
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
-	var timeStep = 1.0 / 60.0;
-	var velIters = 8;
-	var posIters = 3;
-	this.world.Step(timeStep, velIters, posIters);
+	var timeStep = this.timeStep;
+	this.timeAccumulator += timeStep
+	while (this.timeAccumulator >= timeStep) {
+		this.world.Step(timeStep, 8 /*velIters*/, 3 /*posIters*/);
+		this.timeAccumulator -= timeStep;
+	}
 };
 
 TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
