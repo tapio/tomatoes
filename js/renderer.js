@@ -40,7 +40,9 @@ TOMATO.RenderSystem.prototype.update = function(dt) {
 
 	// Calculate viewport borders
 	for (var i = 0; i < this.trackedEntities.length; ++i) {
-		var pos = this.trackedEntities[i].getPosition();
+		var entity = this.trackedEntities[i];
+		if (entity.status && entity.status.dead) continue;
+		var pos = entity.getPosition();
 		if (pos.x < x1) x1 = pos.x;
 		if (pos.x > x2) x2 = pos.x;
 		if (pos.y < y1) y1 = pos.y;
