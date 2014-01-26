@@ -70,8 +70,8 @@ TOMATO.Game.prototype.createPlayer = function(params) {
 	switch (params.controller) {
 		case "keyboard1": pl.controller = new TOMATO.KeyboardController(pl, TOMATO.KeyboardController.DefaultMapping1); break;
 		case "keyboard2": pl.controller = new TOMATO.KeyboardController(pl, TOMATO.KeyboardController.DefaultMapping2); break;
-		case "gamepad1": pl.controller = new TOMATO.GamepadController(pl); break;
-		case "gamepad2": pl.controller = new TOMATO.GamepadController(pl); break;
+		case "gamepad1": pl.controller = new TOMATO.GamepadController(pl, 0); break;
+		case "gamepad2": pl.controller = new TOMATO.GamepadController(pl, 1); break;
 		case "remote": pl.controller = new TOMATO.RemoteController(pl); break;
 		case "ai": pl.controller = new TOMATO.AIController(pl); break;
 		default: console.error("Invalid params.controller: " + params.controller); break;

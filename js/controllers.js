@@ -33,6 +33,9 @@ TOMATO.Controller.prototype.update = function(dt) {
 };
 
 
+//
+// KeyboardController
+//
 TOMATO.KeyboardController = function(entity, mapping) {
 	TOMATO.Controller.call(this, entity);
 	this.mapping = mapping;
@@ -51,8 +54,6 @@ TOMATO.KeyboardController = function(entity, mapping) {
 	document.addEventListener('keyup', onKeyUp, false);
 
 	this.update = function(dt) {
-		TOMATO.Controller.prototype.update.call(this, dt);
-
 		this.moveInput = 0;
 		this.jumpInput = 0;
 
@@ -62,6 +63,8 @@ TOMATO.KeyboardController = function(entity, mapping) {
 		// Steering
 		if (pressed[this.mapping.left]) this.moveInput = -1;
 		else if (pressed[this.mapping.right]) this.moveInput = 1;
+
+		TOMATO.Controller.prototype.update.call(this, dt);
 	};
 };
 TOMATO.KeyboardController.prototype = Object.create(TOMATO.Controller.prototype);
@@ -69,26 +72,54 @@ TOMATO.KeyboardController.DefaultMapping1 = { up: 38, down: 40, left: 37, right:
 TOMATO.KeyboardController.DefaultMapping2 = { up: 87, down: 83, left: 65, right: 68 } // WASD
 
 
-TOMATO.GamepadController = function(entity) {
+//
+// GamepadController
+//
+TOMATO.GamepadController = function(entity, index) {
 	TOMATO.Controller.call(this, entity);
+	this.index = index;
+	navigator.getGamepads = navigator.webkitGetGamepads || navigator.mozGetGamepads || navigator.getGamepads;
 };
 TOMATO.GamepadController.prototype = Object.create(TOMATO.Controller.prototype);
 
+TOMATO.GamepadController.prototype.update = function(dt) {
+	if (!navigator.getGamepads) return;
 
+	var gamepads = navigator.getGamepads();
+	if (this.index >= gamepads.length) return;
+
+	var gamepad = gamepads[this.index];
+	if (!gamepad) return;
+
+	this.moveInput = gamepad.axes[0];
+	this.jumpInput = -gamepad.axes[1];
+	if (this.jumpInput < 0.5)
+		this.jumpInput = 0;
+
+	TOMATO.Controller.prototype.update.call(this, dt);
+}
+
+
+//
+// AIController
+//
 TOMATO.AIController = function(entity) {
 	TOMATO.Controller.call(this, entity);
 
 	this.update = function(dt) {
-		TOMATO.Controller.prototype.update.call(this, dt);
-
 		this.jumpInput = 0;
 		if (Math.random() < 0.01) this.jumpInput = 1;
 		if (Math.random() < 0.05) this.moveInput = Math.random() * 2 - 1;
+
+		TOMATO.Controller.prototype.update.call(this, dt);
 	};
 };
 TOMATO.AIController.prototype = Object.create(TOMATO.Controller.prototype);
 
 
+//
+// RemoteController
+//
 TOMATO.RemoteController = function(entity) {
 	TOMATO.Controller.call(this, entity);
 };
