@@ -7,6 +7,11 @@ TOMATO.game = new TOMATO.Game();
 function init() {
 	//dumpInfo();
 
+	// Currently needed for Firefox
+	window.addEventListener("gamepadconnected", function(gamepad) {
+		console.log("Gamepad connected:", gamepad);
+	});
+
 	TOMATO.game.world = new TOMATO.World(assets.levels[0]);
 
 	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
