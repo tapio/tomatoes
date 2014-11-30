@@ -78,7 +78,7 @@ TOMATO.KeyboardController.DefaultMapping2 = { up: 87, down: 83, left: 65, right:
 TOMATO.GamepadController = function(entity, index) {
 	TOMATO.Controller.call(this, entity);
 	this.index = index;
-	navigator.getGamepads = navigator.webkitGetGamepads || navigator.mozGetGamepads || navigator.getGamepads;
+	navigator.getGamepads = navigator.getGamepads || navigator.webkitGetGamepads || navigator.mozGetGamepads;
 };
 TOMATO.GamepadController.prototype = Object.create(TOMATO.Controller.prototype);
 
