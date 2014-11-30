@@ -52,25 +52,21 @@ TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
 	this.world.removeBody(body);
 };
 
-TOMATO.PhysicsSystem.prototype.createChainShape = function(vertices, closedLoop) {
-	return null;
-};
-
 TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
-	/*var topLeft = new Box2D.b2Vec2(x1, y1);
-	var topRight = new Box2D.b2Vec2(x2, y1);
-	var bottomLeft = new Box2D.b2Vec2(x1, y2);
-	var bottomRight = new Box2D.b2Vec2(x2, y2);
+	var midx = (x2 - x1) * 0.5;
+	var midy = (y1 - y2) * 0.5;
+	var topShape = new p2.Line(x2 - x1);
+	var bottomShape = new p2.Line(x2 - x1);
+	var leftShape = new p2.Line(y1 - y2);
+	var rightShape = new p2.Line(y1 - y2);
 
-	var chainShape = this.createChainShape([ topLeft, topRight, bottomRight, bottomLeft ], true); // true for closed loop
+	var body = new p2.Body({ mass: 0 });
+	body.addShape(topShape, [midx, y1], 0);
+	body.addShape(bottomShape, [midx, y2], 0);
+	body.addShape(leftShape, [x1, midy], Math.PI / 2);
+	body.addShape(rightShape, [x2, midy], Math.PI / 2);
 
-	var bodyDef = new Box2D.b2BodyDef();
-	bodyDef.set_type(Box2D.b2_staticBody);
-	var body = this.world.CreateBody(bodyDef);
-
-	var fixtureDef = new Box2D.b2FixtureDef();
-	fixtureDef.set_shape(chainShape);
-	body.CreateFixture(fixtureDef);*/
+	this.world.addBody(body);
 };
 
 TOMATO.PhysicsSystem.prototype.rayCast = function(x1, y1, x2, y2) {
