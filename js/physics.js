@@ -12,7 +12,7 @@ TOMATO.PhysicsSystem = function() {
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	var timeStep = this.timeStep;
-	this.timeAccumulator += timeStep
+	this.timeAccumulator += dt
 	while (this.timeAccumulator >= timeStep) {
 		this.world.step(timeStep);
 		this.timeAccumulator -= timeStep;
