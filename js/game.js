@@ -111,12 +111,10 @@ TOMATO.Game.prototype.update = function(dt) {
 		var body = this.entities[i].body;
 		var visual = this.entities[i].visual;
 		if (body && visual) {
-			var pos = body.GetPosition();
-			var rot = body.GetAngle();
 			var meshPos = visual.mesh.position;
-			meshPos.x = pos.get_x();
-			meshPos.y = pos.get_y();
-			visual.mesh.rotation.z = rot;
+			meshPos.x = body.position[0];
+			meshPos.y = body.position[1];
+			visual.mesh.rotation.z = body.angle;
 		}
 	}
 

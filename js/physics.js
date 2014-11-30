@@ -1,45 +1,25 @@
 "use strict";
 
 TOMATO.PhysicsSystem = function() {
-	this.world = new Box2D.b2World(new Box2D.b2Vec2(0.0, -9.81));
-	this.listener = new Box2D.b2ContactListener();
+	this.world = new p2.World({
+		gravity : [0, -9.81],
+	});
+	this.world.solver.iterations = 20;
+	this.world.solver.frictionIterations = 10;
 	this.timeStep = 1 / 60.0;
 	this.timeAccumulator = 0;
-	this.rayCastCallback = new Box2D.b2RayCastCallback();
-	Box2D.customizeVTable(this.rayCastCallback, [{
-		original: Box2D.b2RayCastCallback.prototype.ReportFixture,
-		replacement:
-			function(thsPtr, fixturePtr, point, normal, fraction) {
-				var ths = Box2D.wrapPointer(thsPtr, Box2D.b2RayCastCallback);
-				var fixture = Box2D.wrapPointer(fixturePtr, Box2D.b2Fixture);
-				ths.fixture = fixture;
-				ths.fraction = fraction;
-				//console.log(fixture, point, normal, fraction);
-				return fraction;
-			}
-	}]);
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	var timeStep = this.timeStep;
 	this.timeAccumulator += timeStep
 	while (this.timeAccumulator >= timeStep) {
-		this.world.Step(timeStep, 8 /*velIters*/, 3 /*posIters*/);
+		this.world.step(timeStep);
 		this.timeAccumulator -= timeStep;
 	}
 };
 
 TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
-	Box2D.customizeVTable(this.listener, [{
-		original: Box2D.b2ContactListener.prototype.BeginContact,
-		replacement: function (thisPtr, contactPtr) {
-			var contact = Box2D.wrapPointer(contactPtr, Box2D.b2Contact);
-			var fixtureA = contact.GetFixtureA();
-			var fixtureB = contact.GetFixtureB();
-			callback(fixtureA.GetBody(), fixtureB.GetBody());
-		}
-	}]);
-	this.world.SetContactListener(this.listener);
 };
 
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
@@ -48,50 +28,36 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	var shape;
 	var shapeDef = def.collision || "box";
 	if (shapeDef === "circle") {
-		shape = new Box2D.b2CircleShape();
-		shape.set_m_radius(def.size.x * 0.5);
+		shape = new p2.Circle(def.size.x * 0.5);
 	} else {
-		shape = new Box2D.b2PolygonShape();
-		shape.SetAsBox(def.size.x * 0.5, def.size.y * 0.5);
+		shape = new p2.Rectangle(def.size.x, def.size.y);
 	}
+	shape.material = new p2.Material(); // TODO: Share according to def
+	// TODO: friction: 0.9, restitution: 0.1
 
-	var bodyDef = new Box2D.b2BodyDef();
-	bodyDef.set_type(def.mass ? Box2D.b2_dynamicBody : Box2D.b2_staticBody);
-	bodyDef.set_position(new Box2D.b2Vec2(x || 0.0, y || 0.0));
-	bodyDef.set_fixedRotation(def.character ? true : false);
+	var body = new p2.Body({
+		mass: def.mass || 0,
+		position: [ x || 0, y ||0 ],
+		fixedRotation: def.character ? true : false,
+		damping: 0, // 0.1 is p2's default
+		angularDamping: 0.1 // 0.1 is p2's default
+	});
+	body.addShape(shape);
 
-	var fixtureDef = new Box2D.b2FixtureDef();
-	fixtureDef.set_density(def.mass || 0);
-	fixtureDef.set_friction(def.friction || 0.9);
-	fixtureDef.set_restitution(def.restitution || 0.1);
-	fixtureDef.set_shape(shape);
-
-	var body = this.world.CreateBody(bodyDef);
-	body.CreateFixture(fixtureDef);
+	this.world.addBody(body);
 	return body;
 };
 
 TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
-	this.world.DestroyBody(body);
+	// TODO
 };
 
 TOMATO.PhysicsSystem.prototype.createChainShape = function(vertices, closedLoop) {
-	var shape = new Box2D.b2ChainShape();
-	var buffer = Box2D.allocate(vertices.length * 8, 'float', Box2D.ALLOC_STACK);
-	var offset = 0;
-	for (var i = 0; i < vertices.length; ++i) {
-		Box2D.setValue(buffer+(offset), vertices[i].get_x(), 'float');
-		Box2D.setValue(buffer+(offset+4), vertices[i].get_y(), 'float');
-		offset += 8;
-	}
-	var ptr_wrapped = Box2D.wrapPointer(buffer, Box2D.b2Vec2);
-	if (closedLoop) shape.CreateLoop(ptr_wrapped, vertices.length);
-	else shape.CreateChain(ptr_wrapped, vertices.length);
-	return shape;
+	return null;
 };
 
 TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
-	var topLeft = new Box2D.b2Vec2(x1, y1);
+	/*var topLeft = new Box2D.b2Vec2(x1, y1);
 	var topRight = new Box2D.b2Vec2(x2, y1);
 	var bottomLeft = new Box2D.b2Vec2(x1, y2);
 	var bottomRight = new Box2D.b2Vec2(x2, y2);
@@ -104,14 +70,10 @@ TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
 
 	var fixtureDef = new Box2D.b2FixtureDef();
 	fixtureDef.set_shape(chainShape);
-	body.CreateFixture(fixtureDef);
+	body.CreateFixture(fixtureDef);*/
 };
 
 TOMATO.PhysicsSystem.prototype.rayCast = function(x1, y1, x2, y2) {
-	var p1 = new Box2D.b2Vec2(x1, y1);
-	var p2 = new Box2D.b2Vec2(x2, y2);
-	this.rayCastCallback.fixture = null;
-	this.world.RayCast(this.rayCastCallback, p1, p2);
-	return this.rayCastCallback.fixture;
+	return null;
 }
 
