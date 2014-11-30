@@ -49,7 +49,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 };
 
 TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
-	// TODO
+	this.world.removeBody(body);
 };
 
 TOMATO.PhysicsSystem.prototype.createChainShape = function(vertices, closedLoop) {
