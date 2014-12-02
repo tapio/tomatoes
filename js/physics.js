@@ -67,6 +67,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	body.addShape(shape);
 
 	if (def.character) {
+		body.allowSleep = false;
 		body.tracked = true;
 		body.standing = false;
 		body.climbing = false;

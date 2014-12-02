@@ -22,7 +22,6 @@ TOMATO.Controller.prototype.update = function(dt) {
 			else jump *= 0.5;
 			steer *= 0.5;
 		}
-		body.wakeUp();
 		body.applyForce([steer, jump], body.position);
 		var vec = [this.brakeCoeff * body.velocity[0] * Math.abs(body.velocity[0]), 0];
 		body.applyForce(vec, body.position);
