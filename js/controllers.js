@@ -4,7 +4,7 @@ TOMATO.Controller = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.moveForce = 1000.0;
 	this.jumpForce = 8000.0;
-	this.brakeForce = -0.2;
+	this.brakeCoeff = -4.0;
 	this.moveInput = 0;
 	this.jumpInput = 0;
 };
@@ -24,7 +24,7 @@ TOMATO.Controller.prototype.update = function(dt) {
 		}
 		body.wakeUp();
 		body.applyForce([steer, jump], body.position);
-		var vec = [body.velocity[0] * this.brakeForce, 0];
+		var vec = [this.brakeCoeff * body.velocity[0] * Math.abs(body.velocity[0]), 0];
 		body.applyForce(vec, body.position);
 	}
 };
