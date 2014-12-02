@@ -23,9 +23,18 @@ TOMATO.Status.prototype.update = function(dt) {
 		return;
 	}
 
-	// Check airborne status
-	if (this.entity.body.tracked) {
-		this.airborne = !this.entity.body.standing && !this.entity.body.climbing;
+	// Update airborne and ladder status
+	var body = this.entity.body;
+	if (body && body.tracked) {
+		this.climbing = false;
+		var ladders = TOMATO.game.world.ladders;
+		for (var i = 0, l = ladders.length; i < l; ++i) {
+			if (TOMATO.game.physicsSystem.overlaps(body, ladders[i].body)) {
+				this.climbing = true;
+				break;
+			}
+		}
+		this.airborne = !body.standing && !body.climbing;
 	}
 };
 

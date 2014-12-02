@@ -11,6 +11,7 @@ TOMATO.World = function(level) {
 		new THREE.Vector2(this.width * 0.333, this.height * 0.8),
 		new THREE.Vector2(this.width * 0.667, this.height * 0.8)
 	];
+	this.ladders = [];
 
 	// Clutter definitions
 	var clutter = [];
@@ -111,7 +112,7 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 		mass: 0,
 		sensor: true
 	}, x + this.blockSize / 2, y + height * this.blockSize / 2);
-	entity.body.ladder = true;
+	this.ladders.push(entity);
 	TOMATO.game.add(entity);
 	return entity;
 };

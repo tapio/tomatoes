@@ -17,7 +17,6 @@ TOMATO.PhysicsSystem = function() {
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	for (var i = 0, l = this.trackedBodies.length; i < l; i++) {
 		this.trackedBodies[i].standing = false;
-		this.trackedBodies[i].climbing = false;
 	}
 
 	//var timeStep = this.timeStep;
@@ -102,3 +101,6 @@ TOMATO.PhysicsSystem.prototype.rayCast = function(x1, y1, x2, y2) {
 	return null;
 }
 
+TOMATO.PhysicsSystem.prototype.overlaps = function(bodyA, bodyB) {
+	return bodyA.overlaps(bodyB);
+}
