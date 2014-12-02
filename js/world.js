@@ -111,6 +111,7 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 		mass: 0,
 		sensor: true
 	}, x + this.blockSize / 2, y + height * this.blockSize / 2);
+	entity.body.ladder = true;
 	TOMATO.game.add(entity);
 	return entity;
 };

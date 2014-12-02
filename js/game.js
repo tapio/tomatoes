@@ -14,6 +14,10 @@ TOMATO.Game = function() {
 
 	this.physicsSystem.setContactListener(function(a, b) {
 		var aa = a.entity, bb = b.entity;
+		if (a.tracked && b.ladder)
+			a.climbing = true;
+		if (b.tracked && a.ladder)
+			b.climbing = true;
 		if (!aa || !bb) return;
 		if (aa.powerUp && bb.powerUp) return;
 		if (aa.status && bb.powerUp) {

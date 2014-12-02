@@ -15,6 +15,11 @@ TOMATO.PhysicsSystem = function() {
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
+	for (var i = 0, l = this.trackedBodies.length; i < l; i++) {
+		this.trackedBodies[i].standing = false;
+		this.trackedBodies[i].climbing = false;
+	}
+
 	//var timeStep = this.timeStep;
 	//this.timeAccumulator += dt
 	//while (this.timeAccumulator >= timeStep) {
@@ -23,9 +28,7 @@ TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	//}
 	this.world.step(this.timeStep, dt, 10);
 
-	for (var i = 0, l = this.trackedBodies.length; i < l; i++)
-		this.trackedBodies[i].standing = false;
-	for (var i = 0, l = this.world.narrowphase.contactEquations.length; i < l; i++){
+	for (var i = 0, l = this.world.narrowphase.contactEquations.length; i < l; i++) {
 		var c = this.world.narrowphase.contactEquations[i];
 		if (c.bodyA.tracked && c.normalA[1] < -0.5)
 			c.bodyA.standing = true;
@@ -66,6 +69,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (def.character) {
 		body.tracked = true;
 		body.standing = false;
+		body.climbing = false;
 		this.trackedBodies.push(body);
 	}
 	this.world.addBody(body);

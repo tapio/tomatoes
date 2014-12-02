@@ -25,7 +25,7 @@ TOMATO.Status.prototype.update = function(dt) {
 
 	// Check airborne status
 	if (this.entity.body.tracked) {
-		this.airborne = !this.entity.body.standing;
+		this.airborne = !this.entity.body.standing && !this.entity.body.climbing;
 	}
 };
 
