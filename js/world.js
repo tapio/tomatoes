@@ -34,8 +34,13 @@ TOMATO.World = function(level) {
 	this.addPlatform(platform, 5, this.waterLevel + 5, this.width - 16, clutter);
 	this.addPlatform(platform, 14, this.waterLevel + 7, 10, clutter);
 	this.addPlatform(platform, 25, this.waterLevel + 9, 10, clutter);
+	this.addPlatform(platform, 15, this.waterLevel + 9, 2, clutter);
 	this.addPlatform(platform, 38, this.waterLevel + 6, 8, clutter);
 
+	// Bridges
+	var bridge = assets.blocks[level.tiles.bridge];
+	this.addBridge(bridge, 17, this.waterLevel + 9, 8);
+	
 	// Ladders
 	var ladder = assets.blocks[level.tiles.ladder];
 	this.addLadder(ladder, 0, this.waterLevel, 8);
@@ -87,6 +92,29 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 	}, x + width / 2, y + this.blockSize / 2);
 	TOMATO.game.add(entity);
 	return entity;
+};
+
+TOMATO.World.prototype.addBridge = function(def, x, y, width) {
+	width = width | 0;
+	if (width < 2) throw("Too narrow bridge");
+	var geo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize);
+	geo.dynamic = false;
+	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
+	var prevBody = null;
+	for (var i = 0; i < width; ++i) {
+		var entity = new TOMATO.Entity();
+		entity.visual = new TOMATO.Sprite(entity, geo, mat);
+		entity.body = TOMATO.game.physicsSystem.createBody({
+			size: { x: this.blockSize, y: this.blockSize },
+			collision: def.collision,
+			mass: (i == 0 || i == width-1) ? 0 : def.mass
+		}, x + (i + 0.5) * this.blockSize, y + this.blockSize * 0.5);
+		entity.body.fixedRotation = true;
+		if (prevBody)
+			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody);
+		TOMATO.game.add(entity);
+		prevBody = entity.body;
+	}
 };
 
 TOMATO.World.prototype.addLadder = function(def, x, y, height) {

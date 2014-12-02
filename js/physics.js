@@ -80,6 +80,11 @@ TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
 	this.world.removeBody(body);
 };
 
+TOMATO.PhysicsSystem.prototype.addConstraint = function(bodyA, bodyB) {
+	var constraint = new p2.DistanceConstraint(bodyA, bodyB);
+	this.world.addConstraint(constraint);
+};
+
 TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
 	var midx = (x2 - x1) * 0.5;
 	var midy = (y1 - y2) * 0.5;

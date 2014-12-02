@@ -1,6 +1,6 @@
 var assets = {
 	blocks: {
-		"bridge": { sprite: "bridge.png", collision: "box" },
+		"bridge": { sprite: "bridge.png", collision: "circle", mass: 10 },
 		"grass": { sprite: "grass.png", collision: "box", platform: true },
 		"dirt": { sprite: "dirt.png", collision: "box", platform: true },
 		"castle": { sprite: "castle.png", collision: "box", platform: true },
