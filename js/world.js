@@ -38,8 +38,8 @@ TOMATO.World = function(level) {
 
 	// Ladders
 	var ladder = assets.blocks[level.tiles.ladder];
-	this.addLadder(ladder, 0, this.waterLevel, 5);
-	this.addLadder(ladder, this.width-1, this.waterLevel, 5);
+	this.addLadder(ladder, 0, this.waterLevel, 8);
+	this.addLadder(ladder, this.width-1, this.waterLevel, 8);
 	this.addLadder(ladder, this.width/2, this.waterLevel+6, 2);
 
 	// Objects
