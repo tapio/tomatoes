@@ -4,6 +4,7 @@ TOMATO.Controller = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.moveForce = 1000.0;
 	this.jumpForce = 8000.0;
+	this.climbSpeed = 3;
 	this.brakeCoeff = -4.0;
 	this.moveInput = 0;
 	this.jumpInput = 0;
@@ -17,7 +18,12 @@ TOMATO.Controller.prototype.update = function(dt) {
 	if (body) {
 		var steer = this.moveInput * this.moveForce;
 		var jump = this.jumpInput * this.jumpForce;
-		if (this.entity.status.airborne) {
+		if (this.entity.status.canClimb) {
+			jump = 0;
+			if (Math.abs(this.jumpInput) > 0.1)
+				body.velocity[1] = this.jumpInput * this.climbSpeed;
+		}
+		else if (!this.entity.status.canJump) {
 			if (jump > 0) jump = 0;
 			else jump *= 0.5;
 			steer *= 0.5;

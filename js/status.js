@@ -3,7 +3,8 @@
 TOMATO.Status = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.dead = false;
-	this.airborne = false;
+	this.canClimb = false;
+	this.canJump = false;
 	this.respawns = 2;
 	this.lifeTime = Infinity;
 	this.powerUp = null;
@@ -26,15 +27,15 @@ TOMATO.Status.prototype.update = function(dt) {
 	// Update airborne and ladder status
 	var body = this.entity.body;
 	if (body && body.tracked) {
-		this.climbing = false;
+		this.canClimb = false;
 		var ladders = TOMATO.game.world.ladders;
 		for (var i = 0, l = ladders.length; i < l; ++i) {
 			if (TOMATO.game.physicsSystem.overlaps(body, ladders[i].body)) {
-				this.climbing = true;
+				this.canClimb = true;
 				break;
 			}
 		}
-		this.airborne = !body.standing && !body.climbing;
+		this.canJump = body.standing && !this.canClimb;
 	}
 };
 
