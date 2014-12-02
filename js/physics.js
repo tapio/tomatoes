@@ -11,12 +11,13 @@ TOMATO.PhysicsSystem = function() {
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
-	var timeStep = this.timeStep;
-	this.timeAccumulator += dt
-	while (this.timeAccumulator >= timeStep) {
-		this.world.step(timeStep);
-		this.timeAccumulator -= timeStep;
-	}
+	//var timeStep = this.timeStep;
+	//this.timeAccumulator += dt
+	//while (this.timeAccumulator >= timeStep) {
+	//	this.world.step(timeStep);
+	//	this.timeAccumulator -= timeStep;
+	//}
+	this.world.step(this.timeStep, dt, 10);
 };
 
 TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
