@@ -48,6 +48,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	} else {
 		shape = new p2.Rectangle(def.size.x, def.size.y);
 	}
+	shape.sensor = def.sensor || false;
 	shape.material = new p2.Material(); // TODO: Share according to def
 	// TODO: friction: 0.9, restitution: 0.1
 

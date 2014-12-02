@@ -90,7 +90,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 
 TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	height = height | 0;
-	if (height < 2) throw("Too narrow platform");
+	if (height < 2) throw("Too low ladder");
 	var entity = new TOMATO.Entity(null);
 	var geo = new THREE.Geometry();
 	var tempMesh = new THREE.Mesh();
@@ -105,6 +105,12 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x, y + height/2, 0);
+	entity.body = TOMATO.game.physicsSystem.createBody({
+		size: { x: this.blockSize, y: this.blockSize * height },
+		collision: "box",
+		mass: 0,
+		sensor: true
+	}, x + this.blockSize / 2, y + height * this.blockSize / 2);
 	TOMATO.game.add(entity);
 	return entity;
 };
