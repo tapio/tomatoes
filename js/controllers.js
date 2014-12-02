@@ -3,7 +3,7 @@
 TOMATO.Controller = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.moveForce = 1000.0;
-	this.jumpForce = 2000.0;
+	this.jumpForce = 8000.0;
 	this.brakeForce = -0.2;
 	this.moveInput = 0;
 	this.jumpInput = 0;

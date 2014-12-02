@@ -24,9 +24,8 @@ TOMATO.Status.prototype.update = function(dt) {
 	}
 
 	// Check airborne status
-	if (this.entity.controller) {
-		// TODO: Proper height offset
-		this.airborne = false; //TODO: !TOMATO.game.physicsSystem.rayCast(pos.x, pos.y, pos.x, pos.y - 0.6);
+	if (this.entity.body.tracked) {
+		this.airborne = !this.entity.body.standing;
 	}
 };
 

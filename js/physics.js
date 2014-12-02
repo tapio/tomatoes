@@ -9,6 +9,7 @@ TOMATO.PhysicsSystem = function() {
 	this.world.solver.frictionIterations = 10;
 	this.timeStep = 1 / 60.0;
 	this.timeAccumulator = 0;
+	this.trackedBodies = [];
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
@@ -19,6 +20,16 @@ TOMATO.PhysicsSystem.prototype.update = function(dt) {
 	//	this.timeAccumulator -= timeStep;
 	//}
 	this.world.step(this.timeStep, dt, 10);
+
+	for (var i = 0, l = this.trackedBodies.length; i < l; i++)
+		this.trackedBodies[i].standing = false;
+	for (var i = 0, l = this.world.narrowphase.contactEquations.length; i < l; i++){
+		var c = this.world.narrowphase.contactEquations[i];
+		if (c.bodyA.tracked && c.normalA[1] < -0.5)
+			c.bodyA.standing = true;
+		if (c.bodyB.tracked && c.normalA[1] > 0.5)
+			c.bodyB.standing = true;
+	}
 };
 
 TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
@@ -49,6 +60,11 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	});
 	body.addShape(shape);
 
+	if (def.character) {
+		body.tracked = true;
+		body.standing = false;
+		this.trackedBodies.push(body);
+	}
 	this.world.addBody(body);
 	return body;
 };
