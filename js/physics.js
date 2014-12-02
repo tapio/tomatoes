@@ -4,6 +4,7 @@ TOMATO.PhysicsSystem = function() {
 	this.world = new p2.World({
 		gravity : [0, -9.81],
 	});
+	this.world.sleepMode = p2.World.BODY_SLEEPING;
 	this.world.solver.iterations = 20;
 	this.world.solver.frictionIterations = 10;
 	this.timeStep = 1 / 60.0;

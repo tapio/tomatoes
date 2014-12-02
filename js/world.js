@@ -42,6 +42,8 @@ TOMATO.World = function(level) {
 	this.addLadder(ladder, this.width/2, this.waterLevel+6, 2);
 
 	// Objects
+	//for (i = 0; i < 50; ++i)
+	//	TOMATO.game.add(this.createObject(assets.objects.box, this.width * Math.random(), this.height * 0.8));
 	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2 + 2, this.height / 2));
 	TOMATO.game.add(this.createObject(assets.objects.box, 7, this.waterLevel + 6));
 	TOMATO.game.add(this.createObject(assets.objects["dirt-rock"], 15, this.waterLevel + 8));
