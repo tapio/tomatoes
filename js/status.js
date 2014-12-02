@@ -4,7 +4,7 @@ TOMATO.Status = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.dead = false;
 	this.airborne = false;
-	this.respawns = 3;
+	this.respawns = 2;
 	this.lifeTime = Infinity;
 	this.powerUp = null;
 	this.deaths = 0;

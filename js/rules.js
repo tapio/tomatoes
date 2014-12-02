@@ -29,11 +29,11 @@ TOMATO.RulesSystem.prototype.update = function(dt) {
 	for (var i = 0; i < this.players.length; ++i) {
 		var pl = this.players[i];
 		var status = pl.status;
-		pl.domPoints.innerHTML = /*"☠" + status.deaths +*/ "❤" + status.respawns;
 		if (!status.dead) {
 			++playersAlive;
 			winner = i;
-		}
+			pl.domPoints.innerHTML = "❤" + (status.respawns+1);
+		} else pl.domPoints.innerHTML = "☠";
 	}
 	if (playersAlive <= 1 && TOMATO.game.running) {
 		TOMATO.game.running = false;
