@@ -19,7 +19,7 @@ TOMATO.Status.prototype.update = function(dt) {
 	var pos = this.entity.getPosition();
 
 	// Check drowning and life time
-	if (pos.y < TOMATO.game.world.waterLevel || this.lifeTime <= 0) {
+	if (pos.y < TOMATO.game.world.waterLevel-1 || this.lifeTime <= 0) {
 		this.kill();
 		return;
 	}

@@ -1,6 +1,6 @@
 var assets = {
 	blocks: {
-		"bridge": { sprite: "bridge.png", collision: "box", mass: 10 },
+		"bridge": { sprite: "bridge.png", collision: "box", mass: 50 },
 		"grass": { sprite: "grass.png", collision: "box", platform: true },
 		"dirt": { sprite: "dirt.png", collision: "box", platform: true },
 		"castle": { sprite: "castle.png", collision: "box", platform: true },
@@ -23,7 +23,7 @@ var assets = {
 		"rock-moss2": { size: {x:0.9,y:0.8}, sprite: "clutter/rock-moss2.png" }
 	},
 	objects: {
-		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 10 },
+		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 10, floating: true },
 		"dirt-rock": { size: {x:0.7,y:0.7}, sprite: "objects/dirt-rock.png", collision: "circle", mass: 100 },
 		"stone": { size: {x:0.7,y:0.7}, sprite: "objects/stone.png", collision: "circle", mass: 150 }
 	},

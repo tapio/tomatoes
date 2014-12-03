@@ -15,8 +15,19 @@ TOMATO.PhysicsSystem = function() {
 };
 
 TOMATO.PhysicsSystem.prototype.update = function(dt) {
-	for (var i = 0, l = this.trackedBodies.length; i < l; i++) {
-		this.trackedBodies[i].standing = false;
+	var bodies = this.world.bodies;
+	var waterLevel = TOMATO.game.world.waterLevel - 0.5;
+	for (var i = 0, l = bodies.length; i < l; i++) {
+		var body = bodies[i];
+		body.standing = false; // Reset standing status
+		// Buoyancy
+		if (body.floating && body.position[1] < waterLevel) {
+			var f = -1.8 * body.mass * this.world.gravity[1];
+			body.applyForce([0, f], body.position);
+			// Water friction
+			body.damping = 0.8;
+			body.angularDamping = 0.4;
+		}
 	}
 
 	//var timeStep = this.timeStep;
@@ -64,6 +75,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 		angularDamping: 0.1 // 0.1 is p2's default
 	});
 	body.addShape(shape);
+	body.floating = def.floating;
 
 	if (def.character) {
 		body.allowSleep = false;
