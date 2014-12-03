@@ -24,11 +24,14 @@ var assets = {
 	},
 	objects: {
 		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 80, floating: true },
+		"box2": { size: {x:0.8,y:0.8}, sprite: "objects/box-2.png", collision: "box", mass: 80, floating: true },
+		"box3": { size: {x:0.8,y:0.8}, sprite: "objects/box-3.png", collision: "box", mass: 80, floating: true },
 		"dirt-rock": { size: {x:0.7,y:0.7}, sprite: "objects/dirt-rock.png", collision: "circle", mass: 100 },
 		"stone": { size: {x:0.7,y:0.7}, sprite: "objects/stone.png", collision: "circle", mass: 150 }
 	},
 	powerups: {
-		"weight": { size: {x:0.7,y:0.7}, sprite: "powerups/weight.png", collision: "box", mass: 1 }
+		"random": { size: {x:0.7,y:0.7}, sprite: "powerups/random.png", collision: "box", mass: 10 },
+		"weight": { size: {x:0.7,y:0.7}, sprite: "powerups/weight.png", collision: "box", mass: 10 }
 	},
 	characters: [
 		{ size: {x:0.8,y:0.8}, sprite: "characters/red.png", collision: "circle", mass: 50, character: true },
