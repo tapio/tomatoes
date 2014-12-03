@@ -98,19 +98,23 @@ TOMATO.PhysicsSystem.prototype.addConstraint = function(bodyA, bodyB) {
 };
 
 TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
+	var offset = 50;
 	var midx = (x2 - x1) * 0.5;
 	var midy = (y1 - y2) * 0.5;
-	var topShape = new p2.Line(x2 - x1);
-	var bottomShape = new p2.Line(x2 - x1);
-	var leftShape = new p2.Line(y1 - y2);
-	var rightShape = new p2.Line(y1 - y2);
+	var horShape = new p2.Rectangle(x2 - x1, offset * 2);
+	var verShape = new p2.Rectangle(offset * 2, y1 - y2);
 
-	var body = new p2.Body({ mass: 0 });
-	body.addShape(topShape, [midx, y1], 0);
-	body.addShape(bottomShape, [midx, y2], 0);
-	body.addShape(leftShape, [x1, midy], Math.PI / 2);
-	body.addShape(rightShape, [x2, midy], Math.PI / 2);
-
+	var body = new p2.Body({ position: [midx, y1 + offset], mass: 0 });
+	body.addShape(horShape);
+	this.world.addBody(body);
+	body = new p2.Body({ position: [midx, y2 - offset], mass: 0 });
+	body.addShape(horShape);
+	this.world.addBody(body);
+	body = new p2.Body({ position: [x1 - offset, midy], mass: 0 });
+	body.addShape(verShape);
+	this.world.addBody(body);
+	body = new p2.Body({ position: [x2 + offset, midy], mass: 0 });
+	body.addShape(verShape);
 	this.world.addBody(body);
 };
 
