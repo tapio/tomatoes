@@ -97,7 +97,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 	width = width | 0;
 	if (width < 2) throw("Too narrow bridge");
-	var geo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize);
+	var geo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize / 3, 0, 0, 1, 3);
 	geo.dynamic = false;
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	var prevBody = null;
@@ -105,10 +105,10 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 		var entity = new TOMATO.Entity();
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.body = TOMATO.game.physicsSystem.createBody({
-			size: { x: this.blockSize, y: this.blockSize },
+			size: { x: this.blockSize, y: this.blockSize / 3 },
 			collision: def.collision,
 			mass: (i == 0 || i == width-1) ? 0 : def.mass
-		}, x + (i + 0.5) * this.blockSize, y + this.blockSize * 0.5);
+		}, x + (i + 0.5) * this.blockSize, y + this.blockSize - this.blockSize / 6);
 		entity.body.fixedRotation = true;
 		if (prevBody)
 			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody);
