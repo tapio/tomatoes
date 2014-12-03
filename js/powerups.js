@@ -7,7 +7,7 @@ TOMATO.PowerUpSystem = function() {
 };
 
 TOMATO.PowerUpSystem.prototype.spawnPowerUp = function() {
-	var def = assets.powerups["weight"];
+	var def = assets.powerups["random"];
 	var power = TOMATO.game.world.createObject(def,
 		THREE.Math.randInt(1, TOMATO.game.world.width - 2),
 		THREE.Math.randInt(TOMATO.game.world.waterLevel + 5, TOMATO.game.world.height - 1)
