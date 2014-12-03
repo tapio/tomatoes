@@ -25,8 +25,8 @@ TOMATO.PhysicsSystem.prototype.update = function(dt) {
 			var f = -1.8 * body.mass * this.world.gravity[1];
 			body.applyForce([0, f], body.position);
 			// Water friction
-			body.damping = 0.8;
-			body.angularDamping = 0.4;
+			body.damping = 0.9;
+			body.angularDamping = 0.6;
 		}
 	}
 
