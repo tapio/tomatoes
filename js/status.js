@@ -4,7 +4,8 @@ TOMATO.Status = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.dead = false;
 	this.canClimb = false;
-	this.canJump = false;
+	this.airborne = false;
+	this.jump = 0;
 	this.respawns = 2;
 	this.lifeTime = Infinity;
 	this.powerUp = null;
@@ -35,7 +36,14 @@ TOMATO.Status.prototype.update = function(dt) {
 				break;
 			}
 		}
-		this.canJump = body.standing && !this.canClimb;
+		this.airborne = !body.standing && !this.canClimb;
+		if (this.airborne) {
+			if (this.entity.controller.jumpInput <= 0)
+				this.jump = 0;
+			else
+				this.jump -= dt;
+		} else
+			this.jump = 0.400;
 	}
 };
 

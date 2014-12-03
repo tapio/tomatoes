@@ -3,8 +3,8 @@
 TOMATO.Controller = function(entity) {
 	TOMATO.Component.call(this, entity);
 	this.moveForce = 1000.0;
-	this.jumpForce = 8000.0;
-	this.climbSpeed = 3;
+	this.jumpSpeed = 4.0;
+	this.climbSpeed = 3.0;
 	this.brakeCoeff = -4.0;
 	this.moveInput = 0;
 	this.jumpInput = 0;
@@ -16,21 +16,17 @@ TOMATO.Controller.prototype.update = function(dt) {
 
 	var body = this.entity.body;
 	if (body) {
+		if (Math.abs(this.jumpInput) > 0.25 && this.entity.status.canClimb) {
+			body.velocity[1] = this.jumpInput * this.climbSpeed;
+		}
+		else if (this.jumpInput > 0.25 && this.entity.status.jump > 0) {
+			body.velocity[1] = this.jumpInput * this.jumpSpeed;
+		}
 		var steer = this.moveInput * this.moveForce;
-		var jump = this.jumpInput * this.jumpForce;
-		if (this.entity.status.canClimb) {
-			jump = 0;
-			if (Math.abs(this.jumpInput) > 0.1)
-				body.velocity[1] = this.jumpInput * this.climbSpeed;
-		}
-		else if (!this.entity.status.canJump) {
-			if (jump > 0) jump = 0;
-			else jump *= 0.5;
+		var brake = this.brakeCoeff * body.velocity[0] * Math.abs(body.velocity[0]);
+		if (this.entity.status.airborne)
 			steer *= 0.5;
-		}
-		body.applyForce([steer, jump], body.position);
-		var vec = [this.brakeCoeff * body.velocity[0] * Math.abs(body.velocity[0]), 0];
-		body.applyForce(vec, body.position);
+		body.applyForce([steer + brake, 0], body.position);
 	}
 };
 
