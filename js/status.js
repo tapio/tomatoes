@@ -62,3 +62,11 @@ TOMATO.Status.prototype.respawn = function() {
 TOMATO.Status.prototype.setPowerUp = function(powerUp) {
 	this.powerUp = powerUp;
 };
+
+TOMATO.Status.prototype.contact = function(other) {
+	if (other.powerUp) {
+		this.setPowerUp(other.powerUp);
+		other.status.kill();
+		TOMATO.game.soundSystem.play("pickup");
+	}
+};
