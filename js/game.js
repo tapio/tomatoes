@@ -17,7 +17,8 @@ TOMATO.Game = function() {
 		if (!aa || !bb) return;
 		if (aa && aa.status) aa.status.contact(bb);
 		if (bb && bb.status) bb.status.contact(aa);
-		TOMATO.game.soundSystem.play("bump");
+		if (aa.status || bb.status)
+			TOMATO.game.soundSystem.play("bump");
 	});
 };
 
