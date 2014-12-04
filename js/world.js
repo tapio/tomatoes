@@ -70,7 +70,7 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			i++;
 		}
 	}
-	// Ladders are scanned one column at a time, starting from bottom
+	// Ladders are scanned one column at a time, starting from the bottom
 	for (i = 0; i < map[0].length; ++i) {
 		for (j = map.length-1; j >= 0; --j) {
 			y = map.length + this.waterLevel - j - 1;
@@ -78,6 +78,17 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			if (l) {
 				this.addLadder(assets.blocks[level.tiles.ladder], i, y, l);
 				j -= l;
+			}
+		}
+	}
+	// Ropes scanned one column at a time, starting from the top
+	for (i = 0; i < map[0].length; ++i) {
+		for (j = 0; j < map.length; ++j) {
+			y = map.length + this.waterLevel - j - 1;
+			l = parseLength("|", i, j, 0, 1);
+			if (l) {
+				this.addRope(assets.blocks[level.tiles.rope], i, y, l);
+				j += l;
 			}
 		}
 	}
@@ -171,7 +182,7 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 		}, x + (i + 0.5) * this.blockSize, y + this.blockSize - this.blockSize / 6);
 		entity.body.fixedRotation = true;
 		if (prevBody)
-			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody);
+			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "distance");
 		TOMATO.game.add(entity);
 		prevBody = entity.body;
 	}
@@ -179,7 +190,7 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 
 TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	height = height | 0;
-	if (height < 2) throw("Too low ladder");
+	if (height < 2) throw("Too short ladder");
 	var entity = new TOMATO.Entity(null);
 	var geo = new THREE.Geometry();
 	var tempMesh = new THREE.Mesh();
@@ -203,6 +214,29 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	this.ladders.push(entity);
 	TOMATO.game.add(entity);
 	return entity;
+};
+
+TOMATO.World.prototype.addRope = function(def, x, y, height) {
+	height = height | 0;
+	if (height < 2) throw("Too short rope");
+	var geo = new TOMATO.SpriteGeometry(1, def.size.y);
+	geo.dynamic = false;
+	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
+	var prevBody = null;
+	for (var j = 0; j < height; j += 0.25) {
+		var entity = new TOMATO.Entity();
+		entity.visual = new TOMATO.Sprite(entity, geo, mat);
+		entity.body = TOMATO.game.physicsSystem.createBody({
+			size: { x: def.size.x, y: def.size.y },
+			collision: def.collision,
+			mass: (j == 0) ? 0 : def.mass
+		}, x + 0.5, y + this.blockSize - j);
+		entity.body.fixedRotation = true;
+		if (prevBody)
+			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "distance");
+		TOMATO.game.add(entity);
+		prevBody = entity.body;
+	}
 };
 
 TOMATO.World.prototype.addWater = function(def) {

@@ -8,6 +8,7 @@ var assets = {
 		"snow": { sprite: "snow.png", collision: "box", platform: true },
 		"stone": { sprite: "stone.png", collision: "box", platform: true },
 		"ladder": { sprite: "ladder.png", ladder: true },
+		"rope": { sprite: "rope.png", collision: "circle", size: {x:0.25,y:0.25}, mass: 1, rope: true },
 		"water": { sprite: "water.png", water: true },
 		"lava": { sprite: "lava.png", water: true }
 	},
@@ -52,6 +53,7 @@ var assets = {
 				platform: "grass",
 				bridge: "bridge",
 				ladder: "ladder",
+				rope: "rope",
 				water: "water"
 			},
 			objects: {
