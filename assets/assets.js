@@ -54,7 +54,11 @@ var assets = {
 				water: "water"
 			},
 			objects: {
-				"box": 5
+				"box": 15,
+				"box2": 10,
+				"box3": 10,
+				"dirt-rock": 5,
+				"stone": 5
 			},
 			clutterProbability: 0.25,
 			clutter: {

@@ -49,7 +49,7 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 		return l;
 	}
 	var i, j, y, l;
-	// Platforms, bridges and starts
+	// Platforms, bridges and start points
 	for (j = 0; j < map.length; ++j) {
 		for (i = 0; i < map[0].length; ) {
 			y = map.length + this.waterLevel - j - 1;
@@ -70,7 +70,7 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			i++;
 		}
 	}
-	// Ladders
+	// Ladders are scanned one column at a time, starting from bottom
 	for (i = 0; i < map[0].length; ++i) {
 		for (j = map.length-1; j >= 0; --j) {
 			y = map.length + this.waterLevel - j - 1;
@@ -81,6 +81,11 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			}
 		}
 	}
+	// Objects
+	for (var obj in level.objects)
+		for (i = 0; i < level.objects[obj]; ++i)
+			TOMATO.game.add(this.createObject(assets.objects[obj], this.width * Math.random(), this.height * Math.random()));
+
 };
 
 TOMATO.World.prototype.createTestLevel = function(level, clutter) {
