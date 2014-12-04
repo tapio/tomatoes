@@ -261,6 +261,7 @@ TOMATO.World.prototype.addWater = function(def) {
 	}
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
+	entity.visual.mesh.position.z = 10; // Make sure water is in front of everything
 	TOMATO.game.add(entity);
 };
 
