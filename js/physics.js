@@ -56,10 +56,15 @@ TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (!def.collision) return null;
 
-	var shape;
+	var shape, shapeAngle = 0;
 	var shapeDef = def.collision || "box";
 	if (shapeDef === "circle") {
 		shape = new p2.Circle(def.size.x * 0.5);
+	} else if (shapeDef === "capsule") {
+		shape = new p2.Capsule(def.size.y - def.size.x, def.size.x * 0.5);
+		shapeAngle = Math.PI * 0.5;
+	} else if (shapeDef === "hcapsule") {
+		shape = new p2.Capsule(def.size.x - def.size.y, def.size.y * 0.5);
 	} else {
 		shape = new p2.Rectangle(def.size.x, def.size.y);
 	}
@@ -74,7 +79,7 @@ TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 		damping: 0, // 0.1 is p2's default
 		angularDamping: 0.1 // 0.1 is p2's default
 	});
-	body.addShape(shape);
+	body.addShape(shape, [0, 0], shapeAngle);
 	body.floating = def.floating;
 
 	if (def.character) {
