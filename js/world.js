@@ -55,14 +55,12 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			y = map.length + this.waterLevel - j - 1;
 			l = parseLength("#", i, j, 1, 0);
 			if (l) {
-				console.log("Found platform of length", l);
 				this.addPlatform(assets.blocks[level.tiles.platform], i, y, l, clutter);
 				i += l;
 				continue;
 			}
 			l = parseLength("-", i, j, 1, 0);
 			if (l) {
-				console.log("Found bridge of length", l);
 				this.addBridge(assets.blocks[level.tiles.bridge], i, y, l);
 				i += l;
 				continue;
