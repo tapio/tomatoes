@@ -2,22 +2,18 @@
 
 TOMATO.World = function(level) {
 	this.blockSize = 1.0;
-	var i;
 
 	this.width = 16 * 3 * this.blockSize;
 	this.height = 9 * 3 * this.blockSize;
 	this.waterLevel = 3 * this.blockSize;
-	this.starts = [
-		new THREE.Vector2(this.width * 0.333, this.height * 0.8),
-		new THREE.Vector2(this.width * 0.667, this.height * 0.8)
-	];
+	this.starts = [];
 	this.ladders = [];
 
 	// Clutter definitions
 	var clutter = [];
 	clutter.probability = level.clutterProbability || 0;
 	for (var c in level.clutter) {
-		for (i = 0; i < level.clutter[c]; ++i) {
+		for (var i = 0; i < level.clutter[c]; ++i) {
 			clutter.push(c);
 		}
 	}
@@ -28,6 +24,72 @@ TOMATO.World = function(level) {
 	bg.visual = new TOMATO.Sprite(bg, new TOMATO.SpriteGeometry(this.width, this.height), bgMaterial);
 	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
 	TOMATO.game.add(bg);
+
+	if (window.location.hash.contains("testlevel"))
+		this.createTestLevel(level, clutter);
+	else this.createLevel(LEVEL.map, level, clutter);
+
+	// Water
+	this.addWater(assets.blocks[level.tiles.water]);
+
+	// World borders
+	TOMATO.game.physicsSystem.createBorders(0, this.height, this.width, 0);
+};
+
+TOMATO.World.prototype.createLevel = function(map, level, clutter) {
+	this.width = map[0].length * this.blockSize;
+	this.height = map.length * this.blockSize + this.waterLevel;
+	function parseLength(tile, x, y, dx, dy) {
+		var l = 0;
+		while (map[y][x] == tile) {
+			l++;
+			x += dx;
+			y += dy;
+		}
+		return l;
+	}
+	var i, j, y, l;
+	// Platforms, bridges and starts
+	for (j = 0; j < map.length; ++j) {
+		for (i = 0; i < map[0].length; ) {
+			y = map.length + this.waterLevel - j - 1;
+			l = parseLength("#", i, j, 1, 0);
+			if (l) {
+				console.log("Found platform of length", l);
+				this.addPlatform(assets.blocks[level.tiles.platform], i, y, l, clutter);
+				i += l;
+				continue;
+			}
+			l = parseLength("-", i, j, 1, 0);
+			if (l) {
+				console.log("Found bridge of length", l);
+				this.addBridge(assets.blocks[level.tiles.bridge], i, y, l);
+				i += l;
+				continue;
+			}
+			if (map[j][i] == "S")
+				this.starts.push(new THREE.Vector2(i * this.blockSize, y * this.blockSize));
+			i++;
+		}
+	}
+	// Ladders
+	for (i = 0; i < map[0].length; ++i) {
+		for (j = map.length-1; j >= 0; --j) {
+			y = map.length + this.waterLevel - j - 1;
+			l = parseLength("H", i, j, 0, -1);
+			if (l) {
+				this.addLadder(assets.blocks[level.tiles.ladder], i, y, l);
+				j -= l;
+			}
+		}
+	}
+};
+
+TOMATO.World.prototype.createTestLevel = function(level, clutter) {
+	this.starts = [
+		new THREE.Vector2(this.width * 0.333, this.height * 0.8),
+		new THREE.Vector2(this.width * 0.667, this.height * 0.8)
+	];
 
 	// Platforms
 	var platform = assets.blocks[level.tiles.platform];
@@ -49,18 +111,12 @@ TOMATO.World = function(level) {
 
 	// Objects
 	var boxes = [ assets.objects.box, assets.objects.box, assets.objects.box2, assets.objects.box3 ];
-	for (i = 0; i < 25; ++i)
+	for (var i = 0; i < 25; ++i)
 		TOMATO.game.add(this.createObject(randElem(boxes), this.width * Math.random(), this.waterLevel + Math.random()));
 	TOMATO.game.add(this.createObject(assets.objects.box, this.width / 2 + 2, this.height / 2));
 	TOMATO.game.add(this.createObject(assets.objects.box2, 7, this.waterLevel + 6));
 	TOMATO.game.add(this.createObject(assets.objects["dirt-rock"], 15, this.waterLevel + 8));
 	TOMATO.game.add(this.createObject(assets.objects["stone"], 19, this.waterLevel + 8));
-
-	// Water
-	this.addWater(assets.blocks[level.tiles.water]);
-
-	// World borders
-	TOMATO.game.physicsSystem.createBorders(0, this.height, this.width, 0);
 };
 
 
