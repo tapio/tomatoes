@@ -4,6 +4,7 @@ var assets = {
 		"grass": { sprite: "grass.png", collision: "box", platform: true },
 		"dirt": { sprite: "dirt.png", collision: "box", platform: true },
 		"castle": { sprite: "castle.png", collision: "box", platform: true },
+		"sand": { sprite: "sand.png", collision: "box", platform: true },
 		"snow": { sprite: "snow.png", collision: "box", platform: true },
 		"stone": { sprite: "stone.png", collision: "box", platform: true },
 		"ladder": { sprite: "ladder.png", ladder: true },
