@@ -171,6 +171,11 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 	var geo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize / 3, 0, 0, 1, 3);
 	geo.dynamic = false;
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
+	var constraintOpts = {
+		distance: 0,
+		localAnchorA: [ -this.blockSize * 0.5, 0 ],
+		localAnchorB: [ this.blockSize * 0.5, 0 ]
+	};
 	var prevBody = null;
 	for (var i = 0; i < width; ++i) {
 		var entity = new TOMATO.Entity();
@@ -180,9 +185,8 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 			collision: def.collision,
 			mass: (i == 0 || i == width-1) ? 0 : def.mass
 		}, x + (i + 0.5) * this.blockSize, y + this.blockSize - this.blockSize / 6);
-		entity.body.fixedRotation = true;
 		if (prevBody)
-			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "distance");
+			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "distance", constraintOpts);
 		TOMATO.game.add(entity);
 		prevBody = entity.body;
 	}
@@ -231,9 +235,9 @@ TOMATO.World.prototype.addRope = function(def, x, y, height) {
 			collision: def.collision,
 			mass: (j == 0) ? 0 : def.mass
 		}, x + 0.5, y + this.blockSize - j);
-		entity.body.fixedRotation = true;
+		entity.body.allowSleep = false;
 		if (prevBody)
-			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "distance");
+			TOMATO.game.physicsSystem.addConstraint(entity.body, prevBody, "lock");
 		TOMATO.game.add(entity);
 		prevBody = entity.body;
 	}
