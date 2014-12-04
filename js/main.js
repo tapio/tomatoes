@@ -19,7 +19,8 @@ function init() {
 	TOMATO.game.createPlayer({ controller: "gamepad1" });
 	TOMATO.game.createPlayer({ controller: "ai" });
 
-	pl.client = new TOMATO.Client(pl);
+	if (window.location.hash.contains("connect"))
+		pl.client = new TOMATO.Client(pl);
 
 	TOMATO.initUI();
 }

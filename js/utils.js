@@ -1,5 +1,12 @@
 "use strict";
 
+if (!String.prototype.contains)
+	String.prototype.contains = function() {
+		return String.prototype.indexOf.apply(this, arguments) !== -1;
+	};
+
+function $(selector) { return document.querySelector(selector); }
+
 function lerp(a, b, f) { return a + (b - a) * f; }
 
 function distSq(x1, y1, x2, y2) {
