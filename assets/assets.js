@@ -24,6 +24,7 @@ var assets = {
 		"tree2": { size: {x:1,y:1}, sprite: "clutter/pine2.png" },
 		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
 		"mushroom2": { size: {x:1,y:1}, sprite: "clutter/mushroom-red.png" },
+		"mushroom3": { size: {x:1,y:1}, sprite: "clutter/mushroom-tan.png" },
 		"rock": { size: {x:1,y:1}, sprite: "clutter/rock.png" },
 		"rock-snow": { size: {x:1,y:1}, sprite: "clutter/rock-snow.png" },
 		"rock-snow2": { size: {x:1,y:1}, sprite: "clutter/rock-snow2.png" },
@@ -81,7 +82,8 @@ var assets = {
 				"rock-moss": 2,
 				"rock-moss2": 1,
 				"mushroom1": 2,
-				"mushroom2": 2
+				"mushroom2": 2,
+				"mushroom3": 1
 			}
 		},{
 			name: "Winter",
