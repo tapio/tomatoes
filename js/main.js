@@ -12,10 +12,11 @@ function init() {
 		console.log("Gamepad connected:", gamepad);
 	});
 
-	var levelIndex = 0;
-	if (window.location.search.contains("snow")) levelIndex = 1;
+	var env = 0;
+	if (window.location.search.contains("snow")) env = 1;
+	else if (window.location.search.contains("desert")) env = 2;
 	
-	TOMATO.game.world = new TOMATO.World(assets.levels[levelIndex]);
+	TOMATO.game.world = new TOMATO.World(assets.levels[env]);
 
 	var pl = TOMATO.game.createPlayer({ controller: "keyboard1" });
 	TOMATO.game.createPlayer({ controller: "keyboard2" });
