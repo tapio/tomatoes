@@ -12,8 +12,9 @@ var assets = {
 		"lava": { sprite: "lava.png", water: true }
 	},
 	interactives: {
-		"bridge": { size: [1, 0.34], sprite: "tiles/bridge.png", collision: "box", mass: 50 },	
-		"rope": { size: [0.12, 0.35], sprite: "tiles/rope.png", collision: "circle", mass: 1, rope: true },
+		"logs": { size: [1, 0.34], sprite: "tiles/logs.png", collision: "box", mass: 50 },
+		"plank": { size: [1, 0.30], sprite: "tiles/plank.png", collision: "box", mass: 50 },
+		"rope": { size: [0.12, 0.35], sprite: "tiles/rope.png", collision: "circle", mass: 1, rope: true }
 	},
 	clutter: {
 		"bush-small": { size: [0.9, 1], sprite: "clutter/bush.png" },
@@ -64,7 +65,7 @@ var assets = {
 			background: "sky.png",
 			tiles: {
 				platform: "grass",
-				bridge: "bridge",
+				bridge: "logs",
 				ladder: "ladder",
 				rope: "rope",
 				water: "water"
@@ -92,7 +93,7 @@ var assets = {
 			background: "sky.png",
 			tiles: {
 				platform: "snow",
-				bridge: "bridge",
+				bridge: "logs",
 				ladder: "ladder",
 				rope: "rope",
 				water: "water-frozen"
@@ -120,7 +121,7 @@ var assets = {
 			background: "sky.png",
 			tiles: {
 				platform: "sand",
-				bridge: "bridge",
+				bridge: "plank",
 				ladder: "ladder",
 				rope: "rope",
 				water: "lava"
