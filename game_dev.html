@@ -25,9 +25,29 @@
 			<div id="ping-container" class="hidden">
 				Ping: <span id="ping"></span>
 			</div>
+
+			<div id="mainmenu-container" class="hidden"><div id="mainmenu">
+				<h3>Press a Button to Join</h3>
+				<img class="playerselector" src="assets/characters/red.png" alt="Red">
+				<img class="playerselector" src="assets/characters/green.png" alt="Green">
+				<img class="playerselector" src="assets/characters/yellow.png" alt="Yellow">
+				<img class="playerselector" src="assets/characters/blue.png" alt="Blue">
+				<p>Arrows - WASD - Gamepad - AI</p>
+				<h4>Choose Environment</h4>
+				<button id="env-prev">&lt;</button>
+				<img class="envimg" src="assets/tiles/grass.png" alt="Grass">
+				<button id="env-next">&gt;</button>
+				<h4>Number of Objects</h4>
+				<input type="radio" name="objectsmultiplier" value="0.5">Few</input>
+				<input type="radio" name="objectsmultiplier" value="1.0" checked>Moderate</input>
+				<input type="radio" name="objectsmultiplier" value="2.0">Plenty</input>
+				<p/>
+				<button id="start">Start</button>
+			</div></div>
+
 			<div id="results" class="hidden">
 				<h1 id="winner"></h1>
-				<a id="restart" href="#">Again</a>
+				<button id="restart">Again</button>
 			</div>
 		</div>
 
