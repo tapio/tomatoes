@@ -1,6 +1,5 @@
 var assets = {
 	blocks: {
-		"bridge": { sprite: "bridge.png", collision: "box", mass: 50 },
 		"grass": { sprite: "grass.png", collision: "box", platform: true },
 		"dirt": { sprite: "dirt.png", collision: "box", platform: true },
 		"castle": { sprite: "castle.png", collision: "box", platform: true },
@@ -8,10 +7,13 @@ var assets = {
 		"snow": { sprite: "snow.png", collision: "box", platform: true },
 		"stone": { sprite: "stone.png", collision: "box", platform: true },
 		"ladder": { sprite: "ladder.png", ladder: true },
-		"rope": { sprite: "rope.png", collision: "circle", size: {x:0.25,y:0.25}, mass: 1, rope: true },
 		"water": { sprite: "water.png", water: true },
 		"water-frozen": { sprite: "water-frozen.png", water: true },
 		"lava": { sprite: "lava.png", water: true }
+	},
+	interactives: {
+		"bridge": { size: {x:1,y:0.34}, sprite: "tiles/bridge.png", collision: "box", mass: 50 },	
+		"rope": { size: {x:0.12,y:0.35}, sprite: "tiles/rope.png", collision: "circle", mass: 1, rope: true },
 	},
 	clutter: {
 		"bush-small": { size: {x:0.9,y:1}, sprite: "clutter/bush.png" },

@@ -90,7 +90,7 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			}
 			l = parseLength("-", i, j, 1, 0);
 			if (l) {
-				this.addBridge(assets.blocks[level.tiles.bridge], i, y, l);
+				this.addBridge(assets.interactives[level.tiles.bridge], i, y, l);
 				i += l;
 				continue;
 			}
@@ -116,7 +116,7 @@ TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 			y = map.length + this.waterLevel - j - 1;
 			l = parseLength("|", i, j, 0, 1);
 			if (l) {
-				this.addRope(assets.blocks[level.tiles.rope], i, y, l);
+				this.addRope(assets.interactives[level.tiles.rope], i, y, l);
 				j += l;
 			}
 		}
@@ -143,7 +143,7 @@ TOMATO.World.prototype.createTestLevel = function(level, clutter) {
 	this.addPlatform(platform, 38, this.waterLevel + 6, 8, clutter);
 
 	// Bridges
-	var bridge = assets.blocks[level.tiles.bridge];
+	var bridge = assets.interactives[level.tiles.bridge];
 	this.addBridge(bridge, 17, this.waterLevel + 9, 8);
 	
 	// Ladders
@@ -197,9 +197,9 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 	width = width | 0;
 	if (width < 2) throw("Too narrow bridge");
-	var geo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize / 3, 0, 0, 1, 3);
+	var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
 	geo.dynamic = false;
-	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
+	var mat = TOMATO.cache.getMaterial(def.sprite);
 	var constraintOpts = {
 		distance: 0,
 		localAnchorA: [ -this.blockSize * 0.5, 0 ],
@@ -210,7 +210,7 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 		var entity = new TOMATO.Entity();
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.body = TOMATO.game.physicsSystem.createBody({
-			size: { x: this.blockSize, y: this.blockSize / 3 },
+			size: { x: def.size.x, y: def.size.y },
 			collision: def.collision,
 			mass: (i == 0 || i == width-1) ? 0 : def.mass
 		}, x + (i + 0.5) * this.blockSize, y + this.blockSize - this.blockSize / 6);
@@ -252,9 +252,9 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 TOMATO.World.prototype.addRope = function(def, x, y, height) {
 	height = height | 0;
 	if (height < 2) throw("Too short rope");
-	var geo = new TOMATO.SpriteGeometry(1, def.size.y);
+	var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
 	geo.dynamic = false;
-	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
+	var mat = TOMATO.cache.getMaterial(def.sprite);
 	var prevBody = null;
 	for (var j = 0; j < height; j += 0.25) {
 		var entity = new TOMATO.Entity();
