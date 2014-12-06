@@ -8,6 +8,7 @@ TOMATO.World = function(level) {
 	this.waterLevel = 3 * this.blockSize;
 	this.starts = [];
 	this.ladders = [];
+	this.clouds = [];
 
 	// Clutter definitions
 	var clutter = [];
@@ -22,9 +23,26 @@ TOMATO.World = function(level) {
 	var bg = new TOMATO.Entity(null);
 	var bgMaterial = TOMATO.cache.getMaterial("backgrounds/" + level.background);
 	bg.visual = new TOMATO.Sprite(bg, new TOMATO.SpriteGeometry(this.width, this.height), bgMaterial);
-	bg.visual.mesh.position.set(this.width / 2, this.height / 2, -100);
+	bg.setPosition(this.width / 2, this.height / 2, -100);
 	TOMATO.game.add(bg);
 
+	// Clouds
+	var cloudMats = [
+		TOMATO.cache.getMaterial("objects/cloud.png"),
+		TOMATO.cache.getMaterial("objects/cloud2.png"),
+		TOMATO.cache.getMaterial("objects/cloud3.png")
+	];
+	var cloudGeo = new TOMATO.SpriteGeometry(2, 1);
+	var windSpeed = 0.2;
+	for (var i = 0; i < 10; ++i) {
+		var cloud = new TOMATO.Entity(null);
+		cloud.visual = new TOMATO.Sprite(cloud, cloudGeo, randElem(cloudMats));
+		cloud.setPosition(Math.random() * this.width, Math.random() * this.height * 0.333 + this.height * 0.667);
+		cloud.velocity = windSpeed * rand(0.8, 1.2);
+		this.clouds.push(cloud);
+		TOMATO.game.add(cloud);
+	}
+	
 	if (window.location.hash.contains("testlevel"))
 		this.createTestLevel(level, clutter);
 	else this.createLevel(LEVEL.map, level, clutter);
@@ -35,6 +53,17 @@ TOMATO.World = function(level) {
 	// World borders
 	TOMATO.game.physicsSystem.createBorders(0, this.height, this.width, 0);
 };
+
+
+TOMATO.World.prototype.update = function(dt) {
+	for (var i = 0, l = this.clouds.length; i < l; ++i) {
+		var cloud = this.clouds[i];
+		cloud.visual.mesh.position.x += cloud.velocity * dt;
+		if (cloud.visual.mesh.position.x > this.width + 2)
+			cloud.setPosition(-2, Math.random() * this.height * 0.333 + this.height * 0.667);
+	}
+};
+
 
 TOMATO.World.prototype.createLevel = function(map, level, clutter) {
 	this.width = map[0].length * this.blockSize;
@@ -149,7 +178,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
 		THREE.GeometryUtils.merge(geo, tempMesh);
 		if (clutter && Math.random() < clutter.probability) {
-			var c = clutter[(Math.random() * clutter.length)|0];
+			var c = randElem(clutter);
 			TOMATO.game.add(this.createObject(assets.clutter[c], x + i * this.blockSize , y + this.blockSize));
 		}
 	}

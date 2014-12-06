@@ -92,6 +92,7 @@ TOMATO.Game.prototype.update = function(dt) {
 	}
 
 	// Update systems
+	this.world.update(dt);
 	this.powerUpSystem.update(dt);
 	this.physicsSystem.update(dt);
 	this.rulesSystem.update(dt);

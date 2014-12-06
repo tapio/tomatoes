@@ -14,6 +14,8 @@ function distSq(x1, y1, x2, y2) {
 	return dx * dx + dy * dy;
 }
 
+function rand(min, max) { return Math.random() * (max - min) + min; }
+
 function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
 
 function randProp(obj) {
