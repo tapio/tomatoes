@@ -12,47 +12,47 @@ var assets = {
 		"lava": { sprite: "lava.png", water: true }
 	},
 	interactives: {
-		"bridge": { size: {x:1,y:0.34}, sprite: "tiles/bridge.png", collision: "box", mass: 50 },	
-		"rope": { size: {x:0.12,y:0.35}, sprite: "tiles/rope.png", collision: "circle", mass: 1, rope: true },
+		"bridge": { size: [1, 0.34], sprite: "tiles/bridge.png", collision: "box", mass: 50 },	
+		"rope": { size: [0.12, 0.35], sprite: "tiles/rope.png", collision: "circle", mass: 1, rope: true },
 	},
 	clutter: {
-		"bush-small": { size: {x:0.9,y:1}, sprite: "clutter/bush.png" },
-		"bush-large": { size: {x:1.8,y:1}, sprite: "clutter/bush.png" },
-		"cactus": { size: {x:1.5,y:2}, sprite: "clutter/cactus.png" },
-		"plant-tiny": { size: {x:1,y:1}, sprite: "clutter/plant.png" },
-		"plant-ice": { size: {x:1,y:1}, sprite: "clutter/plant-ice.png" },
-		"tree-ice": { size: {x:1,y:1}, sprite: "clutter/tree-ice.png" },
-		"tree": { size: {x:1,y:1}, sprite: "clutter/pine.png" },
-		"tree2": { size: {x:1,y:1}, sprite: "clutter/pine2.png" },
-		"mushroom1": { size: {x:1,y:1}, sprite: "clutter/mushroom-brown.png" },
-		"mushroom2": { size: {x:1,y:1}, sprite: "clutter/mushroom-red.png" },
-		"mushroom3": { size: {x:1,y:1}, sprite: "clutter/mushroom-tan.png" },
-		"rock": { size: {x:1,y:1}, sprite: "clutter/rock.png" },
-		"rock-snow": { size: {x:1,y:1}, sprite: "clutter/rock-snow.png" },
-		"rock-snow2": { size: {x:1,y:1}, sprite: "clutter/rock-snow2.png" },
-		"rock-moss": { size: {x:0.9,y:0.9}, sprite: "clutter/rock-moss.png" },
-		"rock-moss2": { size: {x:0.9,y:0.8}, sprite: "clutter/rock-moss2.png" },
-		"snow-pile": { size: {x:1,y:1}, sprite: "clutter/snow-pile.png" },
-		"snow-pile2": { size: {x:1,y:1}, sprite: "clutter/snow-pile2.png" }
+		"bush-small": { size: [0.9, 1], sprite: "clutter/bush.png" },
+		"bush-large": { size: [1.8, 1], sprite: "clutter/bush.png" },
+		"cactus": { size: [1.5, 2], sprite: "clutter/cactus.png" },
+		"plant-tiny": { size: [1, 1], sprite: "clutter/plant.png" },
+		"plant-ice": { size: [1, 1], sprite: "clutter/plant-ice.png" },
+		"tree-ice": { size: [1, 1], sprite: "clutter/tree-ice.png" },
+		"tree": { size: [1, 1], sprite: "clutter/pine.png" },
+		"tree2": { size: [1, 1], sprite: "clutter/pine2.png" },
+		"mushroom1": { size: [1, 1], sprite: "clutter/mushroom-brown.png" },
+		"mushroom2": { size: [1, 1], sprite: "clutter/mushroom-red.png" },
+		"mushroom3": { size: [1, 1], sprite: "clutter/mushroom-tan.png" },
+		"rock": { size: [1, 1], sprite: "clutter/rock.png" },
+		"rock-snow": { size: [1, 1], sprite: "clutter/rock-snow.png" },
+		"rock-snow2": { size: [1, 1], sprite: "clutter/rock-snow2.png" },
+		"rock-moss": { size: [0.9, 0.9], sprite: "clutter/rock-moss.png" },
+		"rock-moss2": { size: [0.9, 0.8], sprite: "clutter/rock-moss2.png" },
+		"snow-pile": { size: [1, 1], sprite: "clutter/snow-pile.png" },
+		"snow-pile2": { size: [1, 1], sprite: "clutter/snow-pile2.png" }
 	},
 	objects: {
-		"box": { size: {x:0.8,y:0.8}, sprite: "objects/box.png", collision: "box", mass: 80, floating: true },
-		"box2": { size: {x:0.8,y:0.8}, sprite: "objects/box-2.png", collision: "box", mass: 80, floating: true },
-		"box3": { size: {x:0.8,y:0.8}, sprite: "objects/box-3.png", collision: "box", mass: 80, floating: true },
-		"dirt-rock": { size: {x:0.7,y:0.7}, sprite: "objects/dirt-rock.png", collision: "circle", mass: 100 },
-		"stone": { size: {x:0.7,y:0.7}, sprite: "objects/stone.png", collision: "circle", mass: 150 },
-		"snowball": { size: {x:0.5,y:0.5}, sprite: "objects/snowball.png", collision: "circle", mass: 50, floating: true },
-		"snowball-big": { size: {x:0.7,y:0.7}, sprite: "objects/snowball.png", collision: "circle", mass: 150, floating: true }
+		"box": { size: [0.8, 0.8], sprite: "objects/box.png", collision: "box", mass: 80, floating: true },
+		"box2": { size: [0.8, 0.8], sprite: "objects/box-2.png", collision: "box", mass: 80, floating: true },
+		"box3": { size: [0.8, 0.8], sprite: "objects/box-3.png", collision: "box", mass: 80, floating: true },
+		"dirt-rock": { size: [0.7, 0.7], sprite: "objects/dirt-rock.png", collision: "circle", mass: 100 },
+		"stone": { size: [0.7, 0.7], sprite: "objects/stone.png", collision: "circle", mass: 150 },
+		"snowball": { size: [0.5, 0.5], sprite: "objects/snowball.png", collision: "circle", mass: 50, floating: true },
+		"snowball-big": { size: [0.7, 0.7], sprite: "objects/snowball.png", collision: "circle", mass: 150, floating: true }
 	},
 	powerups: {
-		"random": { size: {x:0.7,y:0.7}, sprite: "powerups/random.png", collision: "box", mass: 10 },
-		"weight": { size: {x:0.7,y:0.7}, sprite: "powerups/weight.png", collision: "box", mass: 10 }
+		"random": { size: [0.7, 0.7], sprite: "powerups/random.png", collision: "box", mass: 10 },
+		"weight": { size: [0.7, 0.7], sprite: "powerups/weight.png", collision: "box", mass: 10 }
 	},
 	characters: [
-		{ size: {x:0.8,y:0.8}, sprite: "characters/red.png", collision: "circle", mass: 50, character: true },
-		{ size: {x:0.8,y:0.8}, sprite: "characters/green.png", collision: "circle", mass: 50, character: true },
-		{ size: {x:0.8,y:0.8}, sprite: "characters/yellow.png", collision: "circle", mass: 50, character: true },
-		{ size: {x:0.8,y:0.8}, sprite: "characters/blue.png", collision: "circle", mass: 50, character: true }
+		{ size: [0.8, 0.8], sprite: "characters/red.png", collision: "circle", mass: 50, character: true },
+		{ size: [0.8, 0.8], sprite: "characters/green.png", collision: "circle", mass: 50, character: true },
+		{ size: [0.8, 0.8], sprite: "characters/yellow.png", collision: "circle", mass: 50, character: true },
+		{ size: [0.8, 0.8], sprite: "characters/blue.png", collision: "circle", mass: 50, character: true }
 	],
 	sounds: {
 		"pickup": [ "power-up.ogg" ],

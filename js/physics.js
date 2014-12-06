@@ -56,17 +56,18 @@ TOMATO.PhysicsSystem.prototype.setContactListener = function(callback) {
 TOMATO.PhysicsSystem.prototype.createBody = function(def, x, y) {
 	if (!def.collision) return null;
 
+	var w = def.size[0], h = def.size[1];
 	var shape, shapeAngle = 0;
 	var shapeDef = def.collision || "box";
 	if (shapeDef === "circle") {
-		shape = new p2.Circle(def.size.x * 0.5);
+		shape = new p2.Circle(w * 0.5);
 	} else if (shapeDef === "capsule") {
-		shape = new p2.Capsule(def.size.y - def.size.x, def.size.x * 0.5);
+		shape = new p2.Capsule(h - w, w * 0.5);
 		shapeAngle = Math.PI * 0.5;
 	} else if (shapeDef === "hcapsule") {
-		shape = new p2.Capsule(def.size.x - def.size.y, def.size.y * 0.5);
+		shape = new p2.Capsule(w - h, h * 0.5);
 	} else {
-		shape = new p2.Rectangle(def.size.x, def.size.y);
+		shape = new p2.Rectangle(w, h);
 	}
 	shape.sensor = def.sensor || false;
 	shape.material = new p2.Material(); // TODO: Share according to def

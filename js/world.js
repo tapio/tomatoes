@@ -186,7 +186,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x + width / 2, y + this.blockSize / 2, 0);
 	entity.body = TOMATO.game.physicsSystem.createBody({
-		size: { x: this.blockSize * width, y: this.blockSize },
+		size: [ this.blockSize * width, this.blockSize ],
 		collision: def.collision,
 		mass: def.mass
 	}, x + width / 2, y + this.blockSize / 2);
@@ -197,7 +197,7 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 	width = width | 0;
 	if (width < 2) throw("Too narrow bridge");
-	var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
+	var geo = new TOMATO.SpriteGeometry(def.size[0], def.size[1]);
 	geo.dynamic = false;
 	var mat = TOMATO.cache.getMaterial(def.sprite);
 	var constraintOpts = {
@@ -210,7 +210,7 @@ TOMATO.World.prototype.addBridge = function(def, x, y, width) {
 		var entity = new TOMATO.Entity();
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.body = TOMATO.game.physicsSystem.createBody({
-			size: { x: def.size.x, y: def.size.y },
+			size: def.size,
 			collision: def.collision,
 			mass: (i == 0 || i == width-1) ? 0 : def.mass
 		}, x + (i + 0.5) * this.blockSize, y + this.blockSize - this.blockSize / 6);
@@ -239,7 +239,7 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
 	entity.visual.mesh.position.set(x, y + height/2, 0);
 	entity.body = TOMATO.game.physicsSystem.createBody({
-		size: { x: this.blockSize, y: this.blockSize * height },
+		size: [ this.blockSize, this.blockSize * height ],
 		collision: "box",
 		mass: 0,
 		sensor: true
@@ -252,7 +252,7 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 TOMATO.World.prototype.addRope = function(def, x, y, height) {
 	height = height | 0;
 	if (height < 2) throw("Too short rope");
-	var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
+	var geo = new TOMATO.SpriteGeometry(def.size[0], def.size[1]);
 	geo.dynamic = false;
 	var mat = TOMATO.cache.getMaterial(def.sprite);
 	var prevBody = null;
@@ -260,7 +260,7 @@ TOMATO.World.prototype.addRope = function(def, x, y, height) {
 		var entity = new TOMATO.Entity();
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.body = TOMATO.game.physicsSystem.createBody({
-			size: { x: def.size.x, y: def.size.y },
+			size: def.size,
 			collision: def.collision,
 			mass: (j == 0) ? 0 : def.mass
 		}, x + 0.5, y + this.blockSize - j);
@@ -296,12 +296,12 @@ TOMATO.World.prototype.addWater = function(def) {
 
 TOMATO.World.prototype.createObject = function(def, x, y) {
 	var entity = new TOMATO.Entity();
-	x += def.size.x / 2;
-	y += def.size.y / 2;
+	x += def.size[0] / 2;
+	y += def.size[1] / 2;
 	// Visuals
 	if (def.sprite) {
 		var mat = TOMATO.cache.getMaterial(def.sprite);
-		var geo = new TOMATO.SpriteGeometry(def.size.x, def.size.y);
+		var geo = new TOMATO.SpriteGeometry(def.size[0], def.size[1]);
 		geo.dynamic = false;
 		entity.visual = new TOMATO.Sprite(entity, geo, mat);
 		entity.visual.mesh.position.set(x, y, 0);
