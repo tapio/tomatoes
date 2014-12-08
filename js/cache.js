@@ -11,6 +11,8 @@ TOMATO.Cache = function() {
 			transparent: true,
 			overdraw: true
 		});
+		t.map.magFilter = THREE.LinearFilter;
+		t.map.minFilter = THREE.LinearFilter; // TODO: Use POT textures
 		return t;
 	};
 };
