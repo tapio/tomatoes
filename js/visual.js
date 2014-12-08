@@ -34,8 +34,6 @@ TOMATO.SpriteGeometry = function(width, height, tileX, tileY, numHorTiles, numVe
 	face.vertexNormals.push(normal.clone(), normal.clone(), normal.clone());
 	this.faces.push(face);
 	this.faceVertexUvs[0].push([ uvb.clone(), uvc.clone(), uvd ]);
-
-	this.computeCentroids();
 };
 TOMATO.SpriteGeometry.prototype = Object.create(THREE.Geometry.prototype);
 

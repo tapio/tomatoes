@@ -37,7 +37,7 @@ TOMATO.World = function(level) {
 	for (var i = 0; i < 10; ++i) {
 		var cloud = new TOMATO.Entity(null);
 		cloud.visual = new TOMATO.Sprite(cloud, cloudGeo, randElem(cloudMats));
-		cloud.setPosition(Math.random() * this.width, Math.random() * this.height * 0.333 + this.height * 0.667);
+		cloud.setPosition(Math.random() * this.width, Math.random() * this.height * 0.333 + this.height * 0.667, -50);
 		cloud.velocity = windSpeed * rand(0.8, 1.2);
 		this.clouds.push(cloud);
 		TOMATO.game.add(cloud);
@@ -168,15 +168,14 @@ TOMATO.World.prototype.addPlatform = function(def, x, y, width, clutter) {
 	if (width < 2) throw("Too narrow platform");
 	var entity = new TOMATO.Entity(null);
 	var geo = new THREE.Geometry();
-	var tempMesh = new THREE.Mesh();
+	var transform = new THREE.Matrix4();
 	for (var i = 0; i < width; ++i) {
 		var tile = 1;
 		if (i == 0) tile = 0;
 		else if (i == width-1) tile = 2;
 		var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, tile, 0, 3, 1);
-		tempMesh.geometry = tempGeo;
-		tempMesh.position.x = i * this.blockSize + this.blockSize / 2 - width / 2;
-		THREE.GeometryUtils.merge(geo, tempMesh);
+		transform.makeTranslation(i * this.blockSize + this.blockSize / 2 - width / 2, 0, 0);
+		geo.merge(tempGeo, transform);
 		if (clutter && Math.random() < clutter.probability) {
 			var c = randElem(clutter);
 			TOMATO.game.add(this.createObject(assets.clutter[c], x + i * this.blockSize , y + this.blockSize));
@@ -226,14 +225,12 @@ TOMATO.World.prototype.addLadder = function(def, x, y, height) {
 	if (height < 2) throw("Too short ladder");
 	var entity = new TOMATO.Entity(null);
 	var geo = new THREE.Geometry();
-	var tempMesh = new THREE.Mesh();
+	var transform = new THREE.Matrix4();
 	for (var i = 0; i < height; ++i) {
 		var tile = (i < height-1) ? 1 : 0;
 		var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, 0, tile, 1, 2);
-		tempMesh.geometry = tempGeo;
-		tempMesh.position.x = this.blockSize / 2;
-		tempMesh.position.y = i * this.blockSize + this.blockSize / 2 - height / 2;
-		THREE.GeometryUtils.merge(geo, tempMesh);
+		transform.makeTranslation(this.blockSize / 2, i * this.blockSize + this.blockSize / 2 - height / 2, 0);
+		geo.merge(tempGeo, transform);
 	}
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
 	entity.visual = new TOMATO.Sprite(entity, geo, mat);
@@ -277,15 +274,13 @@ TOMATO.World.prototype.addWater = function(def) {
 	var columns = (this.width / this.blockSize)|0;
 	var entity = new TOMATO.Entity(null);
 	var geo = new THREE.Geometry();
-	var tempMesh = new THREE.Mesh();
+	var transform = new THREE.Matrix4();
 	for (var j = 0; j < layers; ++j) {
 		for (var i = 0; i < columns; ++i) {
 			var tile = (j < layers - 1) ? 1 : 0;
 			var tempGeo = new TOMATO.SpriteGeometry(this.blockSize, this.blockSize, 0, tile, 1, 2);
-			tempMesh.geometry = tempGeo;
-			tempMesh.position.x = i * this.blockSize + this.blockSize / 2;
-			tempMesh.position.y = j * this.blockSize + this.blockSize / 2;
-			THREE.GeometryUtils.merge(geo, tempMesh);
+			transform.makeTranslation(i * this.blockSize + this.blockSize / 2, j * this.blockSize + this.blockSize / 2, 0);
+			geo.merge(tempGeo, transform);
 		}
 	}
 	var mat = TOMATO.cache.getMaterial("tiles/" + def.sprite);
