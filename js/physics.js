@@ -135,3 +135,7 @@ TOMATO.PhysicsSystem.prototype.rayCast = function(x1, y1, x2, y2) {
 TOMATO.PhysicsSystem.prototype.overlaps = function(bodyA, bodyB) {
 	return bodyA.overlaps(bodyB);
 }
+
+TOMATO.PhysicsSystem.prototype.findBodies = function(x, y) {
+	return this.world.hitTest([x, y], this.world.bodies, 0.1);
+}

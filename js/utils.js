@@ -5,6 +5,13 @@ if (!String.prototype.contains)
 		return String.prototype.indexOf.apply(this, arguments) !== -1;
 	};
 
+if (!Math.sign)
+	Math.sign = function() {
+		x = +x; // Convert to a number
+		if (x === 0 || isNaN(x)) return x;
+		else return x > 0 ? 1 : -1;
+	};
+
 function $(selector) { return document.querySelector(selector); }
 
 function lerp(a, b, f) { return a + (b - a) * f; }

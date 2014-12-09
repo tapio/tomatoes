@@ -6,18 +6,22 @@ TOMATO.Status = function(entity) {
 	this.canClimb = false;
 	this.airborne = false;
 	this.jump = 0;
+	this.punchCharge = 0;
 	this.respawns = 2;
 	this.lifeTime = Infinity;
 	this.powerUp = null;
 	this.deaths = 0;
+	this.dir = 0;
 };
 TOMATO.Status.prototype = Object.create(TOMATO.Component.prototype);
 
 TOMATO.Status.prototype.update = function(dt) {
 	if (this.dead) return;
 	this.lifeTime -= dt;
+	var entity = this.entity;
+	var controller = entity.controller;
 
-	var pos = this.entity.getPosition();
+	var pos = entity.getPosition();
 
 	// Check drowning and life time
 	if (pos.y < TOMATO.game.world.waterLevel-1 || this.lifeTime <= 0) {
@@ -26,7 +30,7 @@ TOMATO.Status.prototype.update = function(dt) {
 	}
 
 	// Update airborne and ladder status
-	var body = this.entity.body;
+	var body = entity.body;
 	if (body && body.tracked) {
 		this.canClimb = false;
 		var ladders = TOMATO.game.world.ladders;
@@ -38,12 +42,34 @@ TOMATO.Status.prototype.update = function(dt) {
 		}
 		this.airborne = !body.standing && !this.canClimb;
 		if (this.airborne) {
-			if (this.entity.controller.jumpInput <= 0)
+			if (controller.jumpInput <= 0)
 				this.jump = 0;
 			else
 				this.jump -= dt;
 		} else
 			this.jump = 0.400;
+	}
+	if (body && Math.abs(body.velocity[0]) > 0.1)
+		this.dir = Math.sign(body.velocity[0]);
+	
+	// Punch
+	if (controller) {
+		if (controller.actionInput > 0.1) {
+			this.punchCharge += controller.actionInput * dt;
+			if (this.punchCharge > 1) this.punchCharge = 1;
+		} else if (this.punchCharge > 0) {
+			var x = body.position[0] + 0.6 * this.dir;
+			var targetBodies = TOMATO.game.physicsSystem.findBodies(x, body.position[1]);
+			if (targetBodies.length) {
+				var force = [1e5 * this.punchCharge * this.dir, 1e4 * this.punchCharge];
+				for (var i = 0, l = targetBodies.length; i < l; ++i) {
+					var targetBody = targetBodies[i];
+					targetBody.wakeUp();
+					targetBody.applyForce(force, targetBody.position);
+				}
+			}
+			this.punchCharge = 0;
+		}
 	}
 };
 

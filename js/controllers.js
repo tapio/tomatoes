@@ -8,6 +8,7 @@ TOMATO.Controller = function(entity) {
 	this.brakeCoeff = -4.0;
 	this.moveInput = 0;
 	this.jumpInput = 0;
+	this.actionInput = 0;
 };
 TOMATO.Controller.prototype = Object.create(TOMATO.Component.prototype);
 
@@ -40,12 +41,17 @@ TOMATO.KeyboardController = function(entity, mapping) {
 
 	var pressed = [];
 
-	function onKeyDown(event) {
-		pressed[event.keyCode] = true;
+	function onKeyDown(e) {
+		pressed[e.keyCode] = true;
+		if (pressed[17] || pressed[18]) // CTRL/ALT for browser hotkeys
+			return;
+		if (e.keyCode >= 112 && e.keyCode <= 123) // F1-F12
+			return;
+		e.preventDefault();
 	}
 
-	function onKeyUp(event) {
-		pressed[event.keyCode] = false;
+	function onKeyUp(e) {
+		pressed[e.keyCode] = false;
 	}
 
 	document.addEventListener('keydown', onKeyDown, false);
@@ -54,6 +60,7 @@ TOMATO.KeyboardController = function(entity, mapping) {
 	this.update = function(dt) {
 		this.moveInput = 0;
 		this.jumpInput = 0;
+		this.actionInput = 0;
 
 		// Jump / climb
 		if (pressed[this.mapping.up]) this.jumpInput = 1;
@@ -61,13 +68,19 @@ TOMATO.KeyboardController = function(entity, mapping) {
 		// Steering
 		if (pressed[this.mapping.left]) this.moveInput = -1;
 		else if (pressed[this.mapping.right]) this.moveInput = 1;
+		// Action
+		if (pressed[this.mapping.action]) this.actionInput = 1;
 
 		TOMATO.Controller.prototype.update.call(this, dt);
 	};
 };
 TOMATO.KeyboardController.prototype = Object.create(TOMATO.Controller.prototype);
-TOMATO.KeyboardController.DefaultMapping1 = { up: 38, down: 40, left: 37, right: 39 } // Arrows
-TOMATO.KeyboardController.DefaultMapping2 = { up: 87, down: 83, left: 65, right: 68 } // WASD
+TOMATO.KeyboardController.DefaultMapping1 = { // Arrows + CTRL
+	up: 38, down: 40, left: 37, right: 39, action: 17
+};
+TOMATO.KeyboardController.DefaultMapping2 = { // WASD + Tab
+	up: 87, down: 83, left: 65, right: 68, action: 9
+};
 
 
 //
@@ -93,6 +106,7 @@ TOMATO.GamepadController.prototype.update = function(dt) {
 	this.jumpInput = -gamepad.axes[1];
 	if (this.jumpInput < 0.5)
 		this.jumpInput = 0;
+	this.actionInput = gamepad.buttons[0].value;
 
 	TOMATO.Controller.prototype.update.call(this, dt);
 }
@@ -108,6 +122,7 @@ TOMATO.AIController = function(entity) {
 		this.jumpInput = 0;
 		if (Math.random() < 0.01) this.jumpInput = 1;
 		if (Math.random() < 0.05) this.moveInput = Math.random() * 2 - 1;
+		this.actionInput = Math.random() < 0.01 ? 0 : 1;
 
 		TOMATO.Controller.prototype.update.call(this, dt);
 	};
