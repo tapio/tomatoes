@@ -98,13 +98,20 @@ TOMATO.PhysicsSystem.prototype.destroyBody = function(body) {
 	this.world.removeBody(body);
 };
 
-TOMATO.PhysicsSystem.prototype.addConstraint = function(bodyA, bodyB, cType, opts) {
-	cType = cType || "distance";
-	if (cType == "distance")
-		this.world.addConstraint(new p2.DistanceConstraint(bodyA, bodyB, opts));
-	else if (cType = "lock")
-		this.world.addConstraint(new p2.LockConstraint(bodyA, bodyB, opts));
-	else throw Error("Unknown constraint type " + cType);
+TOMATO.PhysicsSystem.prototype.addConstraint = function(bodyA, bodyB, opts) {
+	opts = opts || {};
+	var constraint = null;
+	if (!opts.type || opts.type == "distance")
+		constraint = new p2.DistanceConstraint(bodyA, bodyB, opts);
+	else if (opts.type = "lock")
+		constraint = new p2.LockConstraint(bodyA, bodyB, opts);
+	else throw Error("Unknown constraint type " + opts.type);
+	this.world.addConstraint(constraint);
+	return constraint;
+};
+
+TOMATO.PhysicsSystem.prototype.removeConstraint = function(constraint) {
+	this.world.removeConstraint(constraint);
 };
 
 TOMATO.PhysicsSystem.prototype.createBorders = function(x1, y1, x2, y2) {
